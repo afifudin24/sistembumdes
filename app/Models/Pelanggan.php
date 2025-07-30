@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model {
     use Notifiable;
@@ -13,9 +14,9 @@ class Pelanggan extends Model {
     protected $table = 'pelanggans';
     protected $fillable = [
         'nama',
-        'email',
+        'username',
         'password',
-        'role',
+
         'no_hp',
         'alamat',
         'tanggal_daftar',

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Jul 2025 pada 10.06
--- Versi server: 10.4.32-MariaDB
+-- Waktu pembuatan: 30 Jul 2025 pada 17.47
+-- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `no_hp` varchar(20) DEFAULT NULL,
-  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -42,7 +42,8 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`admin_id`, `nama`, `username`, `password`, `no_hp`, `status`) VALUES
 (1, 'Admin Satu', 'admin1', '$2y$12$yDXPssO5quJurtl3cOsP0udEiimzQWOG2e60MTccCkkJja0txCcQK', '081234567890', 'aktif'),
-(2, 'Admin Dua', 'admin2', '$2y$12$DD9tdiKG3CrjCwpTVxcfIuIzzAzfZ8j0fk2YtwzjxSikJdkOAAm5y', '082345678901', 'nonaktif');
+(2, 'Admin Dua', 'admin2', '$2y$12$DD9tdiKG3CrjCwpTVxcfIuIzzAzfZ8j0fk2YtwzjxSikJdkOAAm5y', '082345678901', 'nonaktif'),
+(3, 'Admin Tiga', 'admin3', '$2y$12$DD9tdiKG3CrjCwpTVxcfIuIzzAzfZ8j0fk2YtwzjxSikJdkOAAm5y', '082345678901', 'nonaktif');
 
 -- --------------------------------------------------------
 
@@ -51,8 +52,8 @@ INSERT INTO `admins` (`admin_id`, `nama`, `username`, `password`, `no_hp`, `stat
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) NOT NULL,
-  `value` mediumtext NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -63,8 +64,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) NOT NULL,
-  `owner` varchar(255) NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -93,11 +94,11 @@ CREATE TABLE `detail_transaksi` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -109,8 +110,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `queue` varchar(255) NOT NULL,
-  `payload` longtext NOT NULL,
+  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint(3) UNSIGNED NOT NULL,
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
   `available_at` int(10) UNSIGNED NOT NULL,
@@ -124,13 +125,13 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int(11) NOT NULL,
   `pending_jobs` int(11) NOT NULL,
   `failed_jobs` int(11) NOT NULL,
-  `failed_job_ids` longtext NOT NULL,
-  `options` mediumtext DEFAULT NULL,
+  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cancelled_at` int(11) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
   `finished_at` int(11) DEFAULT NULL
@@ -144,13 +145,22 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `karyawans` (
   `karyawan_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `no_hp` varchar(20) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+  `status_akun` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `karyawans`
+--
+
+INSERT INTO `karyawans` (`karyawan_id`, `nama`, `password`, `no_hp`, `alamat`, `usaha_id`, `status_akun`) VALUES
+(1, 'Andi Setiawan', '$2y$12$OtqOalkkzmSCMgmIN55HgOeFcQbDW2bJKT4KaRp149qfdYl19Sov2', '081234567890', 'Jl. Merdeka No. 1', 1, 'aktif'),
+(2, 'Budi Santoso', '$2y$12$4EkNXZ4Aik/L5RRDQfASquU6ufIrDL8X3rucTmuQXfAN250iqis5K', '081298765432', 'Jl. Pahlawan No. 10', 2, 'nonaktif'),
+(3, 'Citra Lestari', '$2y$12$FKGgdC/bCq3TAm0uFnQKl.MiIg/1lr.a4V3N43rKVK6AmtvMtNg3K', '081377788899', 'Jl. Sudirman No. 5', 1, 'aktif');
 
 -- --------------------------------------------------------
 
@@ -160,8 +170,8 @@ CREATE TABLE `karyawans` (
 
 CREATE TABLE `kategori` (
   `kategori_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_kategori` varchar(100) NOT NULL,
-  `deskripsi` text DEFAULT NULL,
+  `nama_kategori` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -174,7 +184,7 @@ CREATE TABLE `kategori` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -201,15 +211,23 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `pelanggans` (
   `pelanggan_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('admin','pelanggan') NOT NULL DEFAULT 'pelanggan',
-  `no_hp` varchar(20) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_daftar` datetime NOT NULL DEFAULT current_timestamp(),
-  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+  `status_akun` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `pelanggans`
+--
+
+INSERT INTO `pelanggans` (`pelanggan_id`, `nama`, `username`, `password`, `no_hp`, `alamat`, `tanggal_daftar`, `status_akun`) VALUES
+(1, 'Budi Santoso', 'budi123', '$2y$12$EMxbBu.tKuQNXQqDidTVq.QQ1v3HOB4uzGDqNCaPfzWLvZRUiUPpa', '081234567890', 'Jl. Merdeka No.1, Jakarta', '2025-07-30 15:00:38', 'aktif'),
+(2, 'Siti Aminah', 'sitiaminah', '$2y$12$zEXgJwXxoIM9jGqstazURuimMo5zuANDQLOvbzIJVxSoT4hhtzNuK', '081987654321', 'Jl. Kebangsaan No.2, Bandung', '2025-07-27 15:00:38', 'aktif'),
+(6, 'Afif Waliyudin', 'afifsaja', '$2y$12$KHcPZkb9pjNNTD/sRw2OlO2jMKJD5iLK8Fx9vhG/QyU.kdX/B8lua', '081548769365', 'Surusunda', '2025-07-30 15:42:05', 'nonaktif');
 
 -- --------------------------------------------------------
 
@@ -220,10 +238,10 @@ CREATE TABLE `pelanggans` (
 CREATE TABLE `produks` (
   `produk_id` bigint(20) UNSIGNED NOT NULL,
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_produk` varchar(100) NOT NULL,
-  `deskripsi` text DEFAULT NULL,
+  `nama_produk` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `harga` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `gambar` varchar(255) DEFAULT NULL,
+  `gambar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -236,12 +254,23 @@ CREATE TABLE `produks` (
 
 CREATE TABLE `superadmins` (
   `superadmin_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_admin` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `no_hp` varchar(20) DEFAULT NULL,
-  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+  `nama_admin` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `superadmins`
+--
+
+INSERT INTO `superadmins` (`superadmin_id`, `nama_admin`, `username`, `password`, `no_hp`, `status`) VALUES
+(1, 'Afif Waliyudin', 'afifadmin', '$2y$12$bRctO.sdGOqzrqSqWnGnBeEECD8Qepl3JFXrOqajOzGRfhK9EFgFW', '081111111111', 'aktif'),
+(2, 'Budi Santoso', 'budiadmin', '$2y$12$nYbgvmbNIcIceF9rA5axReuxDZkzGwdjno6YLFaKsH1vu/R2zxK9u', '082222222222', 'aktif'),
+(3, 'Citra Lestari', 'citraadmin', '$2y$12$fLo5vOagkmrDXl6.R6rw4u0qDQ5bGv5Syu9x6R1AVWO1e/l3KLKqi', '083333333333', 'aktif'),
+(4, 'Dedi Kurniawan', 'dediadmin', '$2y$12$41tLAqelddDFMdsojEULve/GDDxXSEsalsL7G0nlZYzd2zvuJqE6G', '084444444444', 'aktif'),
+(5, 'Eka Putri', 'ekaadmin', '$2y$12$gWKBHLqtgMqITTZHJfwZSORGzi1gc0AHgwJaRuccNX8XAWiyJDpG.', '085555555555', 'aktif');
 
 -- --------------------------------------------------------
 
@@ -254,9 +283,9 @@ CREATE TABLE `transaksi` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `tanggal` datetime NOT NULL DEFAULT current_timestamp(),
   `total_harga` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `status` enum('diproses','selesai','dibatalkan') NOT NULL DEFAULT 'diproses',
-  `metode_pembayaran` enum('tunai','transfer','qris') NOT NULL DEFAULT 'tunai',
-  `keterangan` text DEFAULT NULL,
+  `status` enum('diproses','selesai','dibatalkan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diproses',
+  `metode_pembayaran` enum('tunai','transfer','qris') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'tunai',
+  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -269,15 +298,24 @@ CREATE TABLE `transaksi` (
 
 CREATE TABLE `usaha` (
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_usaha` varchar(255) NOT NULL,
-  `keterangan` text DEFAULT NULL,
+  `nama_usaha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `no_telepon` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_telepon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `usaha`
+--
+
+INSERT INTO `usaha` (`usaha_id`, `nama_usaha`, `keterangan`, `admin_id`, `alamat`, `no_telepon`, `email`, `created_at`, `updated_at`) VALUES
+(1, 'Kedai Nusantara', 'Usaha kuliner lokal', 1, 'Jl. Merdeka No.1', '081234567890', 'kedainusantara@example.com', '2025-07-30 07:48:31', '2025-07-30 07:48:31'),
+(2, 'Batik Jatilawangan', 'Kerajinan batik tradisional', 2, 'Jl. Batik Raya No.12', '081234567891', 'batikjatilawangan@example.com', '2025-07-30 07:48:31', '2025-07-30 07:48:31'),
+(3, 'Tirta Tunjung', 'Distribusi air minum', 3, 'Jl. Tirta Sejuk No.45', '081234567892', 'tirtatunjung@example.com', '2025-07-30 07:48:31', '2025-07-30 07:48:31');
 
 --
 -- Indexes for dumped tables
@@ -354,7 +392,7 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `pelanggans`
   ADD PRIMARY KEY (`pelanggan_id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD UNIQUE KEY `users_email_unique` (`username`);
 
 --
 -- Indeks untuk tabel `produks`
@@ -391,7 +429,7 @@ ALTER TABLE `usaha`
 -- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_transaksi`
@@ -415,7 +453,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT untuk tabel `karyawans`
 --
 ALTER TABLE `karyawans`
-  MODIFY `karyawan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `karyawan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategori`
@@ -433,7 +471,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `pelanggans`
 --
 ALTER TABLE `pelanggans`
-  MODIFY `pelanggan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `pelanggan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `produks`
@@ -445,7 +483,7 @@ ALTER TABLE `produks`
 -- AUTO_INCREMENT untuk tabel `superadmins`
 --
 ALTER TABLE `superadmins`
-  MODIFY `superadmin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `superadmin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
@@ -457,7 +495,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT untuk tabel `usaha`
 --
 ALTER TABLE `usaha`
-  MODIFY `usaha_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `usaha_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
