@@ -10,6 +10,7 @@ class Admin extends Authenticatable {
     use Notifiable;
 
     protected $primaryKey = 'admin_id';
+    protected $table = 'admins';
 
     protected $fillable = [
         'nama_admin',
@@ -31,7 +32,7 @@ class Admin extends Authenticatable {
 
     // Relasi: 1 admin memiliki banyak usaha
 
-    public function usahas() {
+    public function usaha() {
         return $this->hasMany( Usaha::class, 'admin_id', 'admin_id' );
     }
 }

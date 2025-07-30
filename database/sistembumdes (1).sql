@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Jul 2025 pada 13.51
--- Versi server: 10.4.11-MariaDB
+-- Waktu pembuatan: 30 Jul 2025 pada 10.06
+-- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,15 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_admin` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_login` datetime DEFAULT NULL,
-  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `nama`, `username`, `password`, `no_hp`, `status`) VALUES
+(1, 'Admin Satu', 'admin1', '$2y$12$yDXPssO5quJurtl3cOsP0udEiimzQWOG2e60MTccCkkJja0txCcQK', '081234567890', 'aktif'),
+(2, 'Admin Dua', 'admin2', '$2y$12$DD9tdiKG3CrjCwpTVxcfIuIzzAzfZ8j0fk2YtwzjxSikJdkOAAm5y', '082345678901', 'nonaktif');
 
 -- --------------------------------------------------------
 
@@ -46,8 +51,8 @@ CREATE TABLE `admins` (
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -58,8 +63,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -72,7 +77,7 @@ CREATE TABLE `cache_locks` (
 CREATE TABLE `detail_transaksi` (
   `detail_id` bigint(20) UNSIGNED NOT NULL,
   `transaksi_id` bigint(20) UNSIGNED NOT NULL,
-  `unit_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_id` bigint(20) UNSIGNED NOT NULL,
   `kuantitas` int(11) NOT NULL DEFAULT 1,
   `harga_satuan` decimal(12,2) NOT NULL,
   `subtotal` decimal(12,2) NOT NULL,
@@ -88,11 +93,11 @@ CREATE TABLE `detail_transaksi` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -104,8 +109,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
   `attempts` tinyint(3) UNSIGNED NOT NULL,
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
   `available_at` int(10) UNSIGNED NOT NULL,
@@ -119,16 +124,32 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `total_jobs` int(11) NOT NULL,
   `pending_jobs` int(11) NOT NULL,
   `failed_jobs` int(11) NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `failed_job_ids` longtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
   `cancelled_at` int(11) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
   `finished_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `karyawans`
+--
+
+CREATE TABLE `karyawans` (
+  `karyawan_id` bigint(20) UNSIGNED NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `usaha_id` bigint(20) UNSIGNED NOT NULL,
+  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -139,8 +160,8 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `kategori` (
   `kategori_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_kategori` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_kategori` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -153,7 +174,7 @@ CREATE TABLE `kategori` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -175,18 +196,52 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `superadmin`
+-- Struktur dari tabel `pelanggans`
 --
 
-CREATE TABLE `superadmin` (
-  `superadmin_id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) NOT NULL,
+CREATE TABLE `pelanggans` (
+  `pelanggan_id` bigint(20) UNSIGNED NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `no_hp` varchar(255) NOT NULL,
-  `status` enum('aktif','nonaktif') DEFAULT 'nonaktif'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `role` enum('admin','pelanggan') NOT NULL DEFAULT 'pelanggan',
+  `no_hp` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `tanggal_daftar` datetime NOT NULL DEFAULT current_timestamp(),
+  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `produks`
+--
+
+CREATE TABLE `produks` (
+  `produk_id` bigint(20) UNSIGNED NOT NULL,
+  `usaha_id` bigint(20) UNSIGNED NOT NULL,
+  `nama_produk` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `harga` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `gambar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `superadmins`
+--
+
+CREATE TABLE `superadmins` (
+  `superadmin_id` bigint(20) UNSIGNED NOT NULL,
+  `nama_admin` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -199,28 +254,9 @@ CREATE TABLE `transaksi` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `tanggal` datetime NOT NULL DEFAULT current_timestamp(),
   `total_harga` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `status` enum('diproses','selesai','dibatalkan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diproses',
-  `metode_pembayaran` enum('tunai','transfer','qris') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'tunai',
-  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `units`
---
-
-CREATE TABLE `units` (
-  `unit_id` bigint(20) UNSIGNED NOT NULL,
-  `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_unit` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kategori_id` bigint(20) UNSIGNED NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `harga` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `stok` int(11) NOT NULL DEFAULT 0,
-  `gambar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('diproses','selesai','dibatalkan') NOT NULL DEFAULT 'diproses',
+  `metode_pembayaran` enum('tunai','transfer','qris') NOT NULL DEFAULT 'tunai',
+  `keterangan` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -233,32 +269,14 @@ CREATE TABLE `units` (
 
 CREATE TABLE `usaha` (
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_usaha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_usaha` varchar(255) NOT NULL,
+  `keterangan` text DEFAULT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telepon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `no_telepon` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `users`
---
-
-CREATE TABLE `users` (
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('admin','pelanggan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pelanggan',
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tanggal_daftar` datetime NOT NULL DEFAULT current_timestamp(),
-  `status_akun` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -270,8 +288,7 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`),
-  ADD UNIQUE KEY `admins_username_unique` (`username`),
-  ADD UNIQUE KEY `admins_email_unique` (`email`);
+  ADD UNIQUE KEY `admins_username_unique` (`username`);
 
 --
 -- Indeks untuk tabel `cache`
@@ -291,7 +308,7 @@ ALTER TABLE `cache_locks`
 ALTER TABLE `detail_transaksi`
   ADD PRIMARY KEY (`detail_id`),
   ADD KEY `detail_transaksi_transaksi_id_foreign` (`transaksi_id`),
-  ADD KEY `detail_transaksi_unit_id_foreign` (`unit_id`);
+  ADD KEY `detail_transaksi_unit_id_foreign` (`produk_id`);
 
 --
 -- Indeks untuk tabel `failed_jobs`
@@ -314,6 +331,13 @@ ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `karyawans`
+--
+ALTER TABLE `karyawans`
+  ADD PRIMARY KEY (`karyawan_id`),
+  ADD KEY `usaha` (`usaha_id`);
+
+--
 -- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
@@ -326,10 +350,24 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `superadmin`
+-- Indeks untuk tabel `pelanggans`
 --
-ALTER TABLE `superadmin`
-  ADD PRIMARY KEY (`superadmin_id`);
+ALTER TABLE `pelanggans`
+  ADD PRIMARY KEY (`pelanggan_id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indeks untuk tabel `produks`
+--
+ALTER TABLE `produks`
+  ADD PRIMARY KEY (`produk_id`);
+
+--
+-- Indeks untuk tabel `superadmins`
+--
+ALTER TABLE `superadmins`
+  ADD PRIMARY KEY (`superadmin_id`),
+  ADD UNIQUE KEY `admins_username_unique` (`username`);
 
 --
 -- Indeks untuk tabel `transaksi`
@@ -339,26 +377,11 @@ ALTER TABLE `transaksi`
   ADD KEY `transaksi_user_id_foreign` (`user_id`);
 
 --
--- Indeks untuk tabel `units`
---
-ALTER TABLE `units`
-  ADD PRIMARY KEY (`unit_id`),
-  ADD KEY `units_kategori_id_foreign` (`kategori_id`),
-  ADD KEY `usaha` (`usaha_id`);
-
---
 -- Indeks untuk tabel `usaha`
 --
 ALTER TABLE `usaha`
   ADD PRIMARY KEY (`usaha_id`),
   ADD KEY `usaha_admin_id_foreign` (`admin_id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -368,7 +391,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_transaksi`
@@ -389,6 +412,12 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT untuk tabel `karyawans`
+--
+ALTER TABLE `karyawans`
+  MODIFY `karyawan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
@@ -401,9 +430,21 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `superadmin`
+-- AUTO_INCREMENT untuk tabel `pelanggans`
 --
-ALTER TABLE `superadmin`
+ALTER TABLE `pelanggans`
+  MODIFY `pelanggan_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `produks`
+--
+ALTER TABLE `produks`
+  MODIFY `produk_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `superadmins`
+--
+ALTER TABLE `superadmins`
   MODIFY `superadmin_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -413,22 +454,10 @@ ALTER TABLE `transaksi`
   MODIFY `transaksi_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `units`
---
-ALTER TABLE `units`
-  MODIFY `unit_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT untuk tabel `usaha`
 --
 ALTER TABLE `usaha`
   MODIFY `usaha_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -439,20 +468,19 @@ ALTER TABLE `users`
 --
 ALTER TABLE `detail_transaksi`
   ADD CONSTRAINT `detail_transaksi_transaksi_id_foreign` FOREIGN KEY (`transaksi_id`) REFERENCES `transaksi` (`transaksi_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `detail_transaksi_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`unit_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `detail_transaksi_unit_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produks` (`produk_id`) ON DELETE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `karyawans`
+--
+ALTER TABLE `karyawans`
+  ADD CONSTRAINT `usaha` FOREIGN KEY (`usaha_id`) REFERENCES `usaha` (`usaha_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `units`
---
-ALTER TABLE `units`
-  ADD CONSTRAINT `units_kategori_id_foreign` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`kategori_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `usaha` FOREIGN KEY (`usaha_id`) REFERENCES `usaha` (`usaha_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `transaksi_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `pelanggans` (`pelanggan_id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `usaha`

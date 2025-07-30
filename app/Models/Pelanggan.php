@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable {
+class Pelanggan extends Model {
     use Notifiable;
 
-    protected $primaryKey = 'user_id';
-
+    protected $primaryKey = 'pelanggan_id';
+    protected $table = 'pelanggans';
     protected $fillable = [
         'nama',
         'email',

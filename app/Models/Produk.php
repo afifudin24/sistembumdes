@@ -4,24 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unit extends Model {
+class Produk extends Model {
     protected $primaryKey = 'unit_id';
-
+    protected $table = 'produks';
+    protected $timestamps = false;
     protected $fillable = [
-        'nama_unit',
-        'kategori_id',
+        'nama_produk',
         'deskripsi',
         'harga',
-        'stok',
         'gambar',
         'usaha_id',
     ];
 
     // Relasi ke Kategori
-
-    public function kategori() {
-        return $this->belongsTo( Kategori::class, 'kategori_id', 'kategori_id' );
-    }
 
     // Relasi ke Usaha
 

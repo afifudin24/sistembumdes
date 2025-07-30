@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Produk;
 
 class Usaha extends Model {
     use HasFactory;
@@ -24,8 +25,8 @@ class Usaha extends Model {
 
     // Relasi ke produk/unit jika ada
 
-    public function units() {
-        return $this->hasMany( Unit::class );
+    public function produk() {
+        return $this->hasMany( Produk::class );
         // pastikan ada model Unit
     }
 }
