@@ -14,7 +14,7 @@ class Transaksi extends Model {
     protected $primaryKey = 'transaksi_id';
     // Primary key
 
-    public $timestamps = false;
+    public $timestamps = true;
     // Jika tidak ada kolom created_at dan updated_at
 
     protected $fillable = [
@@ -35,4 +35,13 @@ class Transaksi extends Model {
     public function pelanggan() {
         return $this->belongsTo( Pelanggan::class, 'pelanggan_id' );
     }
+
+    public function usaha() {
+        return $this->belongsTo( Usaha::class, 'usaha_id', 'usaha_id' );
+    }
+
+    public function detailTransaksi() {
+        return $this->hasMany( DetailTransaksi::class, 'transaksi_id', 'transaksi_id' );
+    }
+
 }

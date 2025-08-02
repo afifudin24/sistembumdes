@@ -29,9 +29,15 @@
 	</div>
 
 	<script src="{{ asset('js/app.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script>
+  feather.replace();
+</script>
+
+
+
+	{{-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
@@ -100,7 +106,7 @@
 				}
 			});
 		});
-	</script>
+	</script> --}}
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
@@ -129,7 +135,7 @@
 			});
 		});
 	</script>
-	<script>
+	{{-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			// Bar chart
 			new Chart(document.getElementById("chartjs-dashboard-bar"), {
@@ -172,7 +178,7 @@
 				}
 			});
 		});
-	</script>
+	</script> --}}
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var markers = [{
@@ -252,6 +258,8 @@
 			});
 		});
 	</script>
+
+   @stack('scripts')
 
 </body>
 

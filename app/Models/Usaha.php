@@ -8,6 +8,8 @@ use App\Models\Produk;
 class Usaha extends Model {
     use HasFactory;
 
+    protected $table = 'usaha';
+
     protected $fillable = [
         'nama_usaha',
         'keterangan',
@@ -29,4 +31,9 @@ class Usaha extends Model {
         return $this->hasMany( Produk::class );
         // pastikan ada model Unit
     }
+
+    public function transaksis() {
+        return $this->hasMany( Transaksi::class, 'usaha_id', 'usaha_id' );
+    }
+
 }

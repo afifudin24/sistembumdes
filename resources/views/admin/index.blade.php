@@ -113,7 +113,7 @@
 						</div>
 					</div>
 
-					<div class="row">
+					{{-- <div class="row">
 						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
@@ -174,7 +174,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> --}}
 
 					<div class="row">
 						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
@@ -258,7 +258,7 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Monthly Sales</h5>
+									<h5 class="card-title mb-0">Penjualan Perbulan</h5>
 								</div>
 								<div class="card-body d-flex w-100">
 									<div class="align-self-center chart chart-lg">

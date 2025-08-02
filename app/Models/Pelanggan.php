@@ -30,4 +30,10 @@ class Pelanggan extends Model {
 
     public $timestamps = false;
     // karena tidak pakai created_at dan updated_at
+
+    // buatkan relasi dengan transaksi
+
+    public function transaksi() {
+        return $this->hasMany( Transaksi::class, 'pelanggan_id' );
+    }
 }

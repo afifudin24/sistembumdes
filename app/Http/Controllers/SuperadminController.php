@@ -6,61 +6,66 @@ use App\Models\Superadmin;
 use App\Http\Requests\StoreSuperadminRequest;
 use App\Http\Requests\UpdateSuperadminRequest;
 
-class SuperadminController extends Controller
-{
+class SuperadminController extends Controller {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
+    * Display a listing of the resource.
+    */
+
+    public function index() {
+        //
+    }
+
+    public function getSuperAdmin() {
+        // ambil superadmin paginate
+        $superadmin = Superadmin::paginate( 10 );
+        return view( 'superadmin.datauser.superadmin', compact( 'superadmin' ) );
+    }
+
+    /**
+    * Show the form for creating a new resource.
+    */
+
+    public function create() {
         //
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
+    * Store a newly created resource in storage.
+    */
+
+    public function store( StoreSuperadminRequest $request ) {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSuperadminRequest $request)
-    {
+    * Display the specified resource.
+    */
+
+    public function show( Superadmin $superadmin ) {
         //
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Superadmin $superadmin)
-    {
+    * Show the form for editing the specified resource.
+    */
+
+    public function edit( Superadmin $superadmin ) {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Superadmin $superadmin)
-    {
+    * Update the specified resource in storage.
+    */
+
+    public function update( UpdateSuperadminRequest $request, Superadmin $superadmin ) {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSuperadminRequest $request, Superadmin $superadmin)
-    {
-        //
-    }
+    * Remove the specified resource from storage.
+    */
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Superadmin $superadmin)
-    {
+    public function destroy( Superadmin $superadmin ) {
         //
     }
 }

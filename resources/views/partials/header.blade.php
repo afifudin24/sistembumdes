@@ -10,15 +10,35 @@
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="shortcut icon" href="{{asset('img/icons/icon-48x48.png')}}" />
+	 <link rel="shortcut icon" href="{{ asset('assets/images/logoo.jpg') }}" />
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
 	<title>Sistem BumDes</title>
 
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+	
+	
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<style>
+ .custom-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.custom-collapse.show {
+  max-height: 500px; /* pastikan cukup tinggi untuk semua konten */
+}
+
+</style>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -30,102 +50,72 @@
         </a>
 
 				<ul class="sidebar-nav">
-					<li class="sidebar-header">
-						Pages
+					<li class="sidebar-header text-uppercase">
+						{{session()->get('role')}}
 					</li>
 
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="index.html">
+					<li class="sidebar-item {{ Request::is('dashboard') ? 'active' : ''}}">
+						<a class="sidebar-link" href="/dashboard">
               <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
             </a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
-              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-            </a>
-					</li>
+					{{-- sidebar superadmin --}}
+					@if(session()->get('role') == 'superadmin')
+					
+						{{--  --}}
+				<li class="sidebar-item {{ Request::is('datasuperadmin', 'dataadmin', 'datakaryawan', 'datapelanggan') ? 'active' : '' }}">
+  <a href="#" class="sidebar-link" onclick="toggleCollapse('datauser')">
+    <i class="align-middle" data-feather="users"></i>
+    <span class="align-middle">Kelola Data User</span>
+  </a>
+  <ul id="datauser" class="sidebar-dropdown list-unstyled custom-collapse {{ Request::is('datasuperadmin', 'dataadmin', 'datakaryawan', 'datapelanggan') ? 'show' : '' }}">
+    <li class="sidebar-item {{ Request::is('datasuperadmin') ? 'active' : '' }}">
+      <a class="sidebar-link" href="/datasuperadmin">Super Admin</a>
+    </li>
+    <li class="sidebar-item {{ Request::is('dataadmin') ? 'active' : '' }}">
+      <a class="sidebar-link" href="/dataadmin">Admin</a>
+    </li>
+    <li class="sidebar-item {{ Request::is('datakaryawan') ? 'active' : '' }}">
+      <a class="sidebar-link" href="/datakaryawan">Karyawan</a>
+    </li>
+    <li class="sidebar-item {{ Request::is('datapelanggan') ? 'active' : '' }}">
+      <a class="sidebar-link" href="/datapelanggan">Pelanggan</a>
+    </li>
+  </ul>
+</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-in.html">
-              <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
-            </a>
-					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
-              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
-            </a>
-					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-blank.html">
-              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
-            </a>
-					</li>
+						{{--  --}}
+						<li class="sidebar-item {{ Request::is('datausaha') ? 'active' : ''}}">
+							<a class="sidebar-link" href="/datausaha">
+								<i class="align-middle" data-feather="bar-chart"></i> <span class="align-middle">Kelola Data Usaha</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link {{ Request::is('dataproduk') ? 'active' : ''}}" href="/dataproduk">
+								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Kelola Data Produk</span>
+							</a>
+						</li>
+						<li class="sidebar-item {{ Request::is('dashboard') ? 'rekaplaporanpenjualan' : ''}}">
+							<a class="sidebar-link" href="/rekaplaporanpenjualan">
+								<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Rekap Laporan Penjualan</span>
+							</a>
+						</li>
+					@endif
+			<li class="sidebar-item">
+    <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
+        <i class="align-middle" data-feather="log-out"></i>
+        <span class="align-middle">Logout</span>
+    </a>
+</li>
 
-					<li class="sidebar-header">
-						Tools & Components
-					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-buttons.html">
-              <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
-            </a>
-					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-forms.html">
-              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Forms</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-cards.html">
-              <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="ui-typography.html">
-              <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="icons-feather.html">
-              <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
-            </a>
-					</li>
-
-					<li class="sidebar-header">
-						Plugins & Addons
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="charts-chartjs.html">
-              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="maps-google.html">
-              <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
-            </a>
-					</li>
 				</ul>
 
-				<div class="sidebar-cta">
-					<div class="sidebar-cta-content">
-						<strong class="d-inline-block mb-2">Upgrade to Pro</strong>
-						<div class="mb-3 text-sm">
-							Are you looking for more components? Check out our premium version.
-						</div>
-						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>
-						</div>
-					</div>
-				</div>
+			
 			</div>
 		</nav>
 
@@ -134,6 +124,8 @@
 				<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
+					{{-- modal yakin logout --}}
+
 
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
@@ -202,91 +194,67 @@
 								</div>
 							</div>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">
-								<div class="position-relative">
-									<i class="align-middle" data-feather="message-square"></i>
-								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
-								<div class="dropdown-menu-header">
-									<div class="position-relative">
-										4 New Messages
-									</div>
-								</div>
-								<div class="list-group">
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="{{asset('img/avatars/avatar-5.jpg')}}" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Vanessa Tucker</div>
-												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
-												<div class="text-muted small mt-1">15m ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">William Harris</div>
-												<div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
-												<div class="text-muted small mt-1">2h ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Christina Mason</div>
-												<div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
-												<div class="text-muted small mt-1">4h ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item">
-										<div class="row g-0 align-items-center">
-											<div class="col-2">
-												<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
-											</div>
-											<div class="col-10 ps-2">
-												<div class="text-dark">Sharon Lessman</div>
-												<div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
-												<div class="text-muted small mt-1">5h ago</div>
-											</div>
-										</div>
-									</a>
-								</div>
-								<div class="dropdown-menu-footer">
-									<a href="#" class="text-muted">Show all messages</a>
-								</div>
-							</div>
-						</li>
+					
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <span class="text-dark">Charles Hall</span>
+                 <span class="text-dark">{{session()->get('user')->nama}}</span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Log out</a>
+							
+								
+								 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
+        <i class="align-middle" data-feather="log-out"></i>
+        <span class="align-middle">Logout</span>
+    </a>
 							</div>
 						</li>
 					</ul>
 				</div>
+							<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin logout?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{-- end modal --}}
 			</nav>
+			@push('scripts')
+			<script>
+  function toggleCollapse(id) {
+    const element = document.getElementById(id);
+    element.classList.toggle('show');
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const dataUserMenu = document.getElementById('datauser');
+    const activeLink = dataUserMenu.querySelector('.active');
+    if (activeLink) {
+      dataUserMenu.classList.add('show');
+    }
+  });
+</script>
+
+			@endpush
+
