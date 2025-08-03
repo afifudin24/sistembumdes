@@ -25,7 +25,11 @@
           <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
           <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
         </ul>
+        @if(session('login') === true)
+          <a href="/dashboard" class="btn btn-light">Dashboard</a>
+        @else
         <a href="/login" class="btn btn-light">Login</a>
+        @endif
       </div>
     </div>
   </nav>

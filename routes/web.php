@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsahaController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\LaporanController;
 
 use App\Http\Middleware\CekLogin;
 
@@ -18,8 +19,12 @@ Route::get('/', [LandingPageController::class, 'index']);
 
 // auth
 Route::get('/login', function () {
+    if (session('login') === true) {
+        return redirect('/dashboard');
+    }
     return view('auth.login');
 });
+
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
@@ -38,9 +43,8 @@ Route::middleware([CekLogin::class])->group(function () {
 });
 
 // Super Admin
-Route::middleware([CekLogin::class . ':superadmin, admin'])->group(function () {
-    Route::get('/getChartData', [DashboardController::class, 'getChartData'])->name('getChartData');
-    Route::get('/chart/monthly', [DashboardController::class, 'getMonthlyChartData']);
+Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
+
 
     // Kelola Data Super Admin
     Route::get('/datasuperadmin', [SuperAdminController::class, 'getSuperAdmin'])->name('datasuperadmin');
@@ -75,11 +79,23 @@ Route::middleware([CekLogin::class . ':superadmin, admin'])->group(function () {
     Route::put('/updateusaha/{id}', [UsahaController::class, 'update'])->name('updateusaha');
     Route::delete('/hapususaha/{id}', [UsahaController::class, 'destroy'])->name('hapususaha');
 
-    // Kelola Data Produk
+
+
+});
+
+Route::middleware([CekLogin::class . ':superadmin, admin'])->group(function () {
+    // chart
+    Route::get('/getChartData', [DashboardController::class, 'getChartData'])->name('getChartData');
+    Route::get('/chart/monthly', [DashboardController::class, 'getMonthlyChartData']);
+
+      // Kelola Data Produk
     Route::get('/dataproduk', [ProdukController::class, 'index'])->name('dataproduk');
     Route::post('/tambahproduk', [ProdukController::class, 'store'])->name('tambahproduk');
     Route::put('/updateproduk/{id}', [ProdukController::class, 'update'])->name('updateproduk');
     Route::delete('/hapusproduk/{id}', [ProdukController::class, 'destroy'])->name('hapusproduk');
 
+    // Rekap Laporan Penjualan
+    Route::get('rekaplaporanpenjualan', [LaporanController::class, 'index'])->name('rekaplaporanpenjualan');
+    Route::get('eksporlaporanpenjualan', [LaporanController::class, 'exportToPDF'])->name('eksporlaporanpenjualan');
 
 });

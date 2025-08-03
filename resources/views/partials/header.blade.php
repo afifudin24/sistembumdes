@@ -98,7 +98,7 @@
 								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Kelola Data Produk</span>
 							</a>
 						</li>
-						<li class="sidebar-item {{ Request::is('dashboard') ? 'rekaplaporanpenjualan' : ''}}">
+						<li class="sidebar-item {{ Request::is('rekaplaporanpenjualan') ? 'active' : ''}}">
 							<a class="sidebar-link" href="/rekaplaporanpenjualan">
 								<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Rekap Laporan Penjualan</span>
 							</a>
