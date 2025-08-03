@@ -16,8 +16,8 @@
 
 	<title>Sistem BumDes</title>
 
-	
-	
+
+
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -62,7 +62,7 @@
 
 					{{-- sidebar superadmin --}}
 					@if(session()->get('role') == 'superadmin')
-					
+
 						{{--  --}}
 				<li class="sidebar-item {{ Request::is('datasuperadmin', 'dataadmin', 'datakaryawan', 'datapelanggan') ? 'active' : '' }}">
   <a href="#" class="sidebar-link" onclick="toggleCollapse('datauser')">
@@ -93,8 +93,8 @@
 								<i class="align-middle" data-feather="bar-chart"></i> <span class="align-middle">Kelola Data Usaha</span>
 							</a>
 						</li>
-						<li class="sidebar-item">
-							<a class="sidebar-link {{ Request::is('dataproduk') ? 'active' : ''}}" href="/dataproduk">
+						<li class="sidebar-item {{ Request::is('dataproduk') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/dataproduk">
 								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Kelola Data Produk</span>
 							</a>
 						</li>
@@ -115,7 +115,7 @@
 
 				</ul>
 
-			
+
 			</div>
 		</nav>
 
@@ -194,7 +194,7 @@
 								</div>
 							</div>
 						</li>
-					
+
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                 <i class="align-middle" data-feather="settings"></i>
@@ -205,8 +205,8 @@
               </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-							
-								
+
+
 								 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="align-middle" data-feather="log-out"></i>
         <span class="align-middle">Logout</span>
@@ -257,4 +257,3 @@
 </script>
 
 			@endpush
-
