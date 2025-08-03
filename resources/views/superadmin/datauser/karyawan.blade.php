@@ -4,7 +4,7 @@
 <main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Data Super Admin</h1>
+					<h1 class="h3 mb-3">Data Karyawan</h1>
 
 
 					<div class="row">
@@ -12,9 +12,9 @@
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									{{-- <h5 class="card-title mb-0">Data Super Admin</h5> --}}
+									{{-- <h5 class="card-title mb-0">Data Karyawan</h5> --}}
 
-               @if ($errors->any())
+                     @if ($errors->any())
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul class="mb-0">
             @foreach ($errors->all() as $error)
@@ -32,14 +32,18 @@
     </div>
 @endif
 
-
                                     <div>
 
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahSuperadmin">
-                                            Tambah Super Admin
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahKaryawan">
+                                            Tambah Karyawan
                                         </button>
                                     </div>
 								</div>
+                                <!-- wadah table -->
+
+                                <div class="table-responsive">
+
+
 
 								<table class="table table-hover my-0">
 									<thead>
@@ -53,23 +57,23 @@
 										</tr>
 									</thead>
 									<tbody>
-                                        @foreach($superadmin as $item)
+                                        @foreach($karyawan as $item)
 										<tr>
 											<td>{{$loop->iteration}}</td>
 											<td class="">{{$item->nama}}</td>
 											<td class="d-none d-xl-table-cell">{{$item->username}}</td>
-                                            @if($item->status == 'aktif')
-                                            <td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}</td>
+                                            @if($item->status_akun == 'aktif')
+                                            <td class="d-none d-xl-table-cell text-capitalize">{{$item->status_akun}}</td>
                                             @else
                                          <td class="d-none d-xl-table-cell text-capitalize ">
                                             <div class="d-flex flex-column align-items-start">
 
                                                 <p>
-                                                    {{$item->status}}
+                                                    {{$item->status_akun}}
 
                                                 </p>
 
-                                                <a class="btn btn-success mt-2" href="/aktifkansuperadmin/{{$item->superadmin_id}}">Aktifkan</a>
+                                                <a class="btn btn-success mt-2" href="/aktifkankaryawan/{{$item->karyawan_id}}">Aktifkan</a>
                                             </div>
 </td>
 
@@ -102,8 +106,9 @@
 
 									</tbody>
 								</table>
+                                     </div>
                                 <div class="d-flex mt-3 mr-3 p-3 justify-content-end">
-                                    {{ $superadmin->links() }}
+                                    {{ $karyawan->links() }}
 
                                 </div>
 							</div>
@@ -118,7 +123,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalDetailLabel">Detail Pengguna</h5>
+        <h5 class="modal-title" id="modalDetailLabel">Detail Karyawan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -136,10 +141,19 @@
               <th scope="row">Status</th>
               <td id="statusDetail">-</td>
             </tr>
+               <tr>
+              <th scope="row">Usaha</th>
+              <td id="usahaDetail">-</td>
+            </tr>
             <tr>
               <th scope="row">No HP</th>
               <td id="nohpDetail">-</td>
             </tr>
+             <tr>
+              <th scope="row">Alamat</th>
+              <td id="alamatDetail">-</td>
+            </tr>
+
           </tbody>
         </table>
       </div>
@@ -156,11 +170,11 @@
             <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="editSuperAdmin" method="POST">
+      <form id="editKaryawan" method="POST">
         @csrf
         @method('PUT')
         <div class="modal-header">
-          <h5 class="modal-title" id="modalEditLabel">Edit Superadmin</h5>
+          <h5 class="modal-title" id="modalEditLabel">Edit Karyawan</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -175,15 +189,29 @@
           </div>
           <div class="mb-3">
             <label for="editStatus" class="form-label">Status</label>
-            <select class="form-select" id="editStatus" name="status" required>
+            <select class="form-select" id="editStatus" name="status_akun" required>
               <option value="aktif">Aktif</option>
               <option value="nonaktif">Nonaktif</option>
+            </select>
+          </div>
+            <div class="mb-3">
+            <label for="roleTambah" class="form-label">Usaha</label>
+            <select class="form-select" id="editUsaha" name="usaha_id" required>
+              <option value="" selected disabled>Pilih Usaha</option>
+              @foreach ($usaha as $u)
+              <option value="{{ $u->usaha_id }}">{{ $u->nama_usaha }}</option>
+              @endforeach
             </select>
           </div>
           <div class="mb-3">
             <label for="editNoHp" class="form-label">No HP</label>
             <input type="text" class="form-control" id="editNoHp" name="nohp">
           </div>
+            <div class="mb-3">
+            <label for="alamatTambah" class="form-label">Alamat <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="editAlamat" name="alamat" required></textarea>
+        </div>
+
         </div>
 
         <div class="modal-footer">
@@ -198,14 +226,14 @@
 
             <!-- end modal edit -->
 
-            <!-- form tambah super admin -->
-                <div class="modal fade" id="modalTambahSuperadmin" tabindex="-1" aria-labelledby="modalTambahSuperadminLabel" aria-hidden="true">
+            <!-- form tambah  Karyawan -->
+                <div class="modal fade" id="modalTambahKaryawan" tabindex="-1" aria-labelledby="modalTambahKaryawanLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="tambahSuperAdmin" action="{{ route('tambahsuperadmin') }}" method="POST">
+      <form id="tambahKaryawan" action="{{ route('tambahKaryawan') }}" method="POST">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTambahSuperadminLabel">Tambah Super Admin</h5>
+          <h5 class="modal-title" id="modalTambahKaryawanLabel">Tambah Karyawan</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
 
@@ -231,16 +259,31 @@
 
           <div class="mb-3">
             <label for="statusTambah" class="form-label">Status</label>
-            <select class="form-select" id="statusTambah" name="status" required>
+            <select class="form-select" id="statusTambah" name="status_akun" required>
               <option value="aktif">Aktif</option>
               <option value="nonaktif">Nonaktif</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="roleTambah" class="form-label">Usaha</label>
+            <select class="form-select" id="roleTambah" name="usaha_id" required>
+              <option value="" selected disabled>Pilih Usaha</option>
+              @foreach ($usaha as $u)
+              <option value="{{ $u->usaha_id }}">{{ $u->nama_usaha }}</option>
+              @endforeach
             </select>
           </div>
           <div class="mb-3">
             <label for="nohpTambah" class="form-label">No HP</label>
             <input type="text" class="form-control" id="nohpTambah" name="nohp" required>
           </div>
+            <div class="mb-3">
+            <label for="alamatTambah" class="form-label">Alamat <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="alamatTambah" name="alamat" required></textarea>
         </div>
+
+        </div>
+
 
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Simpan</button>
@@ -251,13 +294,13 @@
   </div>
 </div>
 
-            <!-- end form tambah super admin -->
+            <!-- end form tambah  Karyawan -->
 
             <!-- modal konfirmasi hapus -->
 <div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="formHapusSuperadmin" method="POST">
+      <form id="formHapusKaryawan" method="POST">
         @csrf
         @method('DELETE')
         <div class="modal-header">
@@ -265,7 +308,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
         <div class="modal-body">
-          <p>Apakah Anda yakin ingin menghapus super admin <strong id="namaHapus"></strong>?</p>
+          <p>Apakah Anda yakin ingin menghapus  Karyawan <strong id="namaHapus"></strong>?</p>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger">Ya, Hapus</button>
@@ -286,8 +329,10 @@
                 var item = $(this).data('item');
                 $('#namaDetail').html(item.nama);
                 $('#usernameDetail').html(item.username);
-                $('#statusDetail').html(item.status);
+                $('#statusDetail').html(item.status_akun);
                 $('#nohpDetail').html(item.no_hp);
+                $('#alamatDetail').html(item.alamat);
+                $('#usahaDetail').html(item.usaha.nama_usaha);
 
 
             });
@@ -296,9 +341,11 @@
                 var item = $(this).data('item');
                 $('#editNama').val(item.nama);
                 $('#editUsername').val(item.username);
-                $('#editStatus').val(item.status);
+                $('#editStatus').val(item.status_akun);
+                $('#editAlamat').val(item.alamat);
+                $('#editUsaha').val(item.usaha_id);
                 $('#editNoHp').val(item.no_hp);
-                $('#editSuperAdmin').attr('action', '/updatesuperadmin/' + item.superadmin_id);
+                $('#editKaryawan').attr('action', '/updatekaryawan/' + item.karyawan_id);
             });
         });
 
@@ -310,7 +357,7 @@
       $('#namaHapus').text(item.nama);
 
       // Set action form
-      $('#formHapusSuperadmin').attr('action', '/hapussuperadmin/' + item.superadmin_id);
+      $('#formHapusKaryawan').attr('action', '/hapuskaryawan/' + item.karyawan_id);
     });
     </script>
 

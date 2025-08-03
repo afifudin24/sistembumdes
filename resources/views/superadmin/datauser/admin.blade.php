@@ -4,7 +4,7 @@
 <main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Data Super Admin</h1>
+					<h1 class="h3 mb-3">Data Admin</h1>
 
 
 					<div class="row">
@@ -12,9 +12,8 @@
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									{{-- <h5 class="card-title mb-0">Data Super Admin</h5> --}}
 
-               @if ($errors->any())
+   @if ($errors->any())
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <ul class="mb-0">
             @foreach ($errors->all() as $error)
@@ -32,11 +31,10 @@
     </div>
 @endif
 
-
                                     <div>
 
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahSuperadmin">
-                                            Tambah Super Admin
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahAdmin">
+                                            Tambah Admin
                                         </button>
                                     </div>
 								</div>
@@ -53,7 +51,7 @@
 										</tr>
 									</thead>
 									<tbody>
-                                        @foreach($superadmin as $item)
+                                        @foreach($admin as $item)
 										<tr>
 											<td>{{$loop->iteration}}</td>
 											<td class="">{{$item->nama}}</td>
@@ -69,7 +67,7 @@
 
                                                 </p>
 
-                                                <a class="btn btn-success mt-2" href="/aktifkansuperadmin/{{$item->superadmin_id}}">Aktifkan</a>
+                                                <a class="btn btn-success mt-2" href="/aktifkanadmin/{{$item->admin_id}}">Aktifkan</a>
                                             </div>
 </td>
 
@@ -103,7 +101,7 @@
 									</tbody>
 								</table>
                                 <div class="d-flex mt-3 mr-3 p-3 justify-content-end">
-                                    {{ $superadmin->links() }}
+                                    {{ $admin->links() }}
 
                                 </div>
 							</div>
@@ -118,7 +116,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalDetailLabel">Detail Pengguna</h5>
+        <h5 class="modal-title" id="modalDetailLabel">Detail Admin</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -156,11 +154,11 @@
             <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="editSuperAdmin" method="POST">
+      <form id="editadmin" method="POST">
         @csrf
         @method('PUT')
         <div class="modal-header">
-          <h5 class="modal-title" id="modalEditLabel">Edit Superadmin</h5>
+          <h5 class="modal-title" id="modalEditLabel">Edit admin</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -198,14 +196,14 @@
 
             <!-- end modal edit -->
 
-            <!-- form tambah super admin -->
-                <div class="modal fade" id="modalTambahSuperadmin" tabindex="-1" aria-labelledby="modalTambahSuperadminLabel" aria-hidden="true">
+            <!-- form tambah admin -->
+                <div class="modal fade" id="modalTambahAdmin" tabindex="-1" aria-labelledby="modalTambahadminLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="tambahSuperAdmin" action="{{ route('tambahsuperadmin') }}" method="POST">
+      <form id="tambahadmin" action="{{ route('tambahadmin') }}" method="POST">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTambahSuperadminLabel">Tambah Super Admin</h5>
+          <h5 class="modal-title" id="modalTambahadminLabel">Tambah Admin</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
 
@@ -251,13 +249,13 @@
   </div>
 </div>
 
-            <!-- end form tambah super admin -->
+            <!-- end form tambah  admin -->
 
             <!-- modal konfirmasi hapus -->
 <div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form id="formHapusSuperadmin" method="POST">
+      <form id="formHapusadmin" method="POST">
         @csrf
         @method('DELETE')
         <div class="modal-header">
@@ -265,7 +263,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
         <div class="modal-body">
-          <p>Apakah Anda yakin ingin menghapus super admin <strong id="namaHapus"></strong>?</p>
+          <p>Apakah Anda yakin ingin menghapus admin <strong id="namaHapus"></strong>?</p>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger">Ya, Hapus</button>
@@ -298,7 +296,7 @@
                 $('#editUsername').val(item.username);
                 $('#editStatus').val(item.status);
                 $('#editNoHp').val(item.no_hp);
-                $('#editSuperAdmin').attr('action', '/updatesuperadmin/' + item.superadmin_id);
+                $('#editadmin').attr('action', '/updateadmin/' + item.admin_id);
             });
         });
 
@@ -310,7 +308,7 @@
       $('#namaHapus').text(item.nama);
 
       // Set action form
-      $('#formHapusSuperadmin').attr('action', '/hapussuperadmin/' + item.superadmin_id);
+      $('#formHapusadmin').attr('action', '/hapusadmin/' + item.admin_id);
     });
     </script>
 

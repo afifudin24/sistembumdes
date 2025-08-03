@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model {
-    protected $primaryKey = 'unit_id';
+    protected $primaryKey = 'produk_id';
     protected $table = 'produks';
-    protected $timestamps = false;
+    public $timestamps = false;
     protected $fillable = [
         'nama_produk',
         'deskripsi',

@@ -28,4 +28,9 @@ class Karyawan extends Model {
 
     public $timestamps = false;
     // karena tidak pakai created_at dan updated_at
+
+    // buatkan relasi dengan usaha
+    public function usaha() {
+        return $this->belongsTo( Usaha::class, 'usaha_id', 'usaha_id' );
+    }
 }

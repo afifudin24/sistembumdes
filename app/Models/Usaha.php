@@ -10,19 +10,24 @@ class Usaha extends Model {
 
     protected $table = 'usaha';
 
+    protected $primaryKey = 'usaha_id';
+
     protected $fillable = [
         'nama_usaha',
         'keterangan',
         'admin_id',
         'alamat',
+        'rekening',
         'no_telepon',
         'email',
+        'no_rek',
+
     ];
 
     // Relasi ke User ( Admin )
 
     public function admin() {
-        return $this->belongsTo( User::class, 'admin_id' );
+        return $this->belongsTo( Admin::class, 'admin_id' );
     }
 
     // Relasi ke produk/unit jika ada
@@ -34,6 +39,11 @@ class Usaha extends Model {
 
     public function transaksis() {
         return $this->hasMany( Transaksi::class, 'usaha_id', 'usaha_id' );
+    }
+
+    // buatkan relasi dengan karyawan
+    public function karyawan() {
+        return $this->hasMany( Karyawan::class, 'usaha_id', 'usaha_id' );
     }
 
 }
