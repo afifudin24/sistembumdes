@@ -74,8 +74,9 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $produk = Produk::findOrFail($id);
-
-        $validated = $request->validate([
+        $role = session()->get('role');
+        if($role == 'superadmin'){
+               $validated = $request->validate([
             'usaha_id' => 'required|exists:usaha,usaha_id',
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
@@ -97,6 +98,34 @@ class ProdukController extends Controller
         $produk->update($validated);
 
         return redirect()->back()->with('success', 'Produk berhasil diperbarui.');
+        }else if($role == 'admin'){
+            $usaha = Usaha::where('admin_id', $user->admin_id)->first();
+                $validated = $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'harga' => 'required|numeric',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // Ganti gambar jika ada upload baru
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama
+            if ($produk->gambar && Storage::disk('public')->exists($produk->gambar)) {
+                Storage::disk('public')->delete($produk->gambar);
+            }
+
+            $gambarPath = $request->file('gambar')->store('produk', 'public');
+            $validated['gambar'] = $gambarPath;
+        }
+
+        $produk->update($validated);
+
+        return redirect()->back()->with('success', 'Produk berhasil diperbarui.');
+        }else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk memperbarui produk.');
+        }
+
+
     }
 
     public function destroy($id)

@@ -104,6 +104,33 @@
 							</a>
 						</li>
 					@endif
+                    @if(session()->get('role') == 'admin')
+                    	<li class="sidebar-item {{ Request::is('dataproduk') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/dataproduk">
+								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Kelola Data Produk</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('datakaryawan') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datakaryawan">
+								<i class="align-middle" data-feather="users"></i> <span class="align-middle">Kelola Data Karyawan</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('datatransaksi') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datatransaksi">
+								<i class="align-middle" data-feather="repeat"></i> <span class="align-middle">Kelola Data Transaksi</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('konfirmasipembayaran') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/konfirmasipembayaran">
+								<i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Konfirmasi Pembayaran</span>
+							</a>
+						</li>
+                        <li class="sidebar-item {{ Request::is('rekaplaporanpenjualan') ? 'active' : ''}}">
+							<a class="sidebar-link" href="/rekaplaporanpenjualan">
+								<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Rekap Laporan Penjualan</span>
+							</a>
+						</li>
+                    @endif
 			<li class="sidebar-item">
     <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="align-middle" data-feather="log-out"></i>
@@ -124,19 +151,19 @@
 				<a class="sidebar-toggle js-sidebar-toggle">
           <i class="hamburger align-self-center"></i>
         </a>
-					{{-- modal yakin logout --}}
+
 
 
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-						<li class="nav-item dropdown">
+						<!-- <li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
 								<div class="position-relative">
 									<i class="align-middle" data-feather="bell"></i>
 									<span class="indicator">4</span>
 								</div>
-							</a>
-							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+							</a> -->
+							<!-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
 								<div class="dropdown-menu-header">
 									4 New Notifications
 								</div>
@@ -192,8 +219,8 @@
 								<div class="dropdown-menu-footer">
 									<a href="#" class="text-muted">Show all notifications</a>
 								</div>
-							</div>
-						</li>
+							</div> -->
+						<!-- </li> -->
 
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">

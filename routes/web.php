@@ -66,12 +66,7 @@ Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
     Route::put('/updatepelanggan/{id}' , [PelangganController::class, 'update'])->name('updatepelanggan');
     Route::delete('/hapuspelanggan/{id}' , [PelangganController::class, 'destroy'])->name('hapuspelanggan');
 
-    // Kelola Data Karyawan
-    Route::get('/datakaryawan', [KaryawanController::class, 'getKaryawan'])->name('datakaryawan');
-    Route::get('/aktifkankaryawan/{id}' , [KaryawanController::class, 'aktifkanKaryawan'])->name('aktifkankaryawan');
-    Route::post('/tambahkaryawan' , [KaryawanController::class, 'store'])->name('tambahKaryawan');
-    Route::put('/updatekaryawan/{id}' , [KaryawanController::class, 'update'])->name('updateKaryawan');
-    Route::delete('/hapuskaryawan/{id}' , [KaryawanController::class, 'destroy'])->name('hapusKaryawan');
+
 
     // Kelola Data Usaha
     Route::get('/datausaha', [UsahaController::class, 'index'])->name('datausaha');
@@ -83,7 +78,7 @@ Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
 
 });
 
-Route::middleware([CekLogin::class . ':superadmin, admin'])->group(function () {
+Route::middleware([CekLogin::class . ':superadmin,admin'])->group(function () {
     // chart
     Route::get('/getChartData', [DashboardController::class, 'getChartData'])->name('getChartData');
     Route::get('/chart/monthly', [DashboardController::class, 'getMonthlyChartData']);
@@ -93,6 +88,13 @@ Route::middleware([CekLogin::class . ':superadmin, admin'])->group(function () {
     Route::post('/tambahproduk', [ProdukController::class, 'store'])->name('tambahproduk');
     Route::put('/updateproduk/{id}', [ProdukController::class, 'update'])->name('updateproduk');
     Route::delete('/hapusproduk/{id}', [ProdukController::class, 'destroy'])->name('hapusproduk');
+
+     // Kelola Data Karyawan
+    Route::get('/datakaryawan', [KaryawanController::class, 'getKaryawan'])->name('datakaryawan');
+    Route::get('/aktifkankaryawan/{id}' , [KaryawanController::class, 'aktifkanKaryawan'])->name('aktifkankaryawan');
+    Route::post('/tambahkaryawan' , [KaryawanController::class, 'store'])->name('tambahKaryawan');
+    Route::put('/updatekaryawan/{id}' , [KaryawanController::class, 'update'])->name('updateKaryawan');
+    Route::delete('/hapuskaryawan/{id}' , [KaryawanController::class, 'destroy'])->name('hapusKaryawan');
 
     // Rekap Laporan Penjualan
     Route::get('rekaplaporanpenjualan', [LaporanController::class, 'index'])->name('rekaplaporanpenjualan');

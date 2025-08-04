@@ -4,7 +4,7 @@
 <main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+					<h1 class="h3 mb-3">Dashboard</h1>
 
 					<div class="row">
 						<div class="col-xl-6 col-xxl-5 d-flex">
@@ -15,19 +15,19 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Sales</h5>
+														<h5 class="card-title">Penjualan</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="truck"></i>
+															<i class="align-middle" data-feather="shopping-bag"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">2.382</h1>
+												<h1 class="mt-1 mb-3">{{$totalPenjualan}}</h1>
 												<div class="mb-0">
-													<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-													<span class="text-muted">Since last week</span>
+
+													<span class="text-muted">Barang</span>
 												</div>
 											</div>
 										</div>
@@ -35,29 +35,7 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Visitors</h5>
-													</div>
-
-													<div class="col-auto">
-														<div class="stat text-primary">
-															<i class="align-middle" data-feather="users"></i>
-														</div>
-													</div>
-												</div>
-												<h1 class="mt-1 mb-3">14.212</h1>
-												<div class="mb-0">
-													<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-													<span class="text-muted">Since last week</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="card">
-											<div class="card-body">
-												<div class="row">
-													<div class="col mt-0">
-														<h5 class="card-title">Earnings</h5>
+														<h5 class="card-title">Pendapatan</h5>
 													</div>
 
 													<div class="col-auto">
@@ -66,31 +44,44 @@
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">$21.300</h1>
-												<div class="mb-0">
-													<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-													<span class="text-muted">Since last week</span>
+												<h1 class="mt-1 mb-3">{{formatRupiah($totalPendapatan) ?? 0}}</h1>
+
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Total Transaksi</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="user"></i>
+														</div>
+													</div>
 												</div>
+												<h1 class="mt-1 mb-3">{{$totalTransaksi}}</h1>
+
 											</div>
 										</div>
 										<div class="card">
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Orders</h5>
+														<h5 class="card-title">Total Karyawan</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="shopping-cart"></i>
+															<i class="align-middle" data-feather="users"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">64</h1>
-												<div class="mb-0">
-													<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-													<span class="text-muted">Since last week</span>
-												</div>
+												<h1 class="mt-1 mb-3">{{$totalKaryawan}}</h1>
+
 											</div>
 										</div>
 									</div>
@@ -102,7 +93,7 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Recent Movement</h5>
+									<h5 class="card-title mb-0">Riwayat Pendapatan Bulan Ini</h5>
 								</div>
 								<div class="card-body py-3">
 									<div class="chart chart-sm">
@@ -113,7 +104,7 @@
 						</div>
 					</div>
 
-					<div class="row">
+					{{-- <div class="row">
 						<div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
@@ -174,82 +165,44 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> --}}
 
 					<div class="row">
 						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Latest Projects</h5>
+									<h5 class="card-title mb-0">Transaksi Terakhir</h5>
 								</div>
 								<table class="table table-hover my-0">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th class="d-none d-xl-table-cell">Start Date</th>
-											<th class="d-none d-xl-table-cell">End Date</th>
-											<th>Status</th>
-											<th class="d-none d-md-table-cell">Assignee</th>
+											<th>NO</th>
+											<th class="">Usaha</th>
+											<th class="d-none d-xl-table-cell">Tanggal</th>
+											<th class="d-none d-xl-table-cell">Pelanggan</th>
+											<th class="">Total Harga</th>
+											<th>Aksi</th>
 										</tr>
 									</thead>
 									<tbody>
+                                        @foreach($transaksiTerakhir as $item)
 										<tr>
-											<td>Project Apollo</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
+											<td>{{$loop->iteration}}</td>
+											<td class="d-none d-xl-table-cell">{{$item->usaha->nama_usaha}}</td>
+											<td class="d-none d-xl-table-cell">{{formatTanggal($item->tanggal)}}</td>
+											<td class="d-none d-xl-table-cell">{{$item->pelanggan->nama}}</td>
+											<td><span class="badge bg-success">{{formatRupiah($item->total_harga)}}</span></td>
+											<td class="d-none d-md-table-cell">
+                                                <button class="btn btn-success" class="d-flex align-items-center">
+                                                <i data-feather="eye"></i>
+                                                <span>
+                                                    Detail
+                                                </span>
+                                            </button></td>
 										</tr>
-										<tr>
-											<td>Project Fireball</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-danger">Cancelled</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-										</tr>
-										<tr>
-											<td>Project Hades</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-										</tr>
-										<tr>
-											<td>Project Nitro</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-										</tr>
-										<tr>
-											<td>Project Phoenix</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-										</tr>
-										<tr>
-											<td>Project X</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-										</tr>
-										<tr>
-											<td>Project Romeo</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Christina Mason</td>
-										</tr>
-										<tr>
-											<td>Project Wombat</td>
-											<td class="d-none d-xl-table-cell">01/01/2023</td>
-											<td class="d-none d-xl-table-cell">31/06/2023</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-										</tr>
+                                        @endforeach
+
 									</tbody>
 								</table>
 							</div>
@@ -258,7 +211,7 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Monthly Sales</h5>
+										<h5 class="card-title mb-0">Penjualan Perbulan</h5>
 								</div>
 								<div class="card-body d-flex w-100">
 									<div class="align-self-center chart chart-lg">
@@ -271,4 +224,136 @@
 
 				</div>
 			</main>
+
+
+@push('scripts')
+
+	<script>
+document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: "{{ route('getChartData') }}",
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+            console.log(response); // ✅ Ini hasilnya di console
+
+            var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+            var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+            gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+            gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+
+            new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: response.labels,
+                    datasets: [{
+                        label: "Transaksi Selesai",
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: "#467fcf",
+                        data: response.data
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        filler: {
+                            propagate: false
+                        }
+                    },
+                    tooltips: {
+                        intersect: false
+                    },
+                    hover: {
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: "rgba(0,0,0,0.0)"
+                            }
+                        }],
+                        yAxes: [{
+                           ticks: {
+        // Format angka ke Rp
+        callback: function (value) {
+            return 'Rp ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        },
+        // Batas maksimum jumlah label di Y-axis
+        maxTicksLimit: 6,
+        // Boleh ditambahkan agar skala tidak mentok
+        suggestedMin: 0,
+        suggestedMax: 2500000
+    },
+                            gridLines: {
+                                color: "rgba(0,0,0,0.0)"
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        error: function (xhr) {
+            console.error("Gagal ambil data chart:", xhr);
+        }
+    });
+});
+
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: "/chart/monthly",
+        method: "GET",
+        success: function (response) {
+            const ctx = document.getElementById("chartjs-dashboard-bar").getContext("2d");
+            console.log('Response chart:', response);
+
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: response.labels, // gunakan labels dari response
+                    datasets: [{
+                        label: "Pendapatan Bulanan",
+                        backgroundColor: window.theme.primary,
+                        borderColor: window.theme.primary,
+                        hoverBackgroundColor: window.theme.primary,
+                        hoverBorderColor: window.theme.primary,
+                        data: response.data.map(val => parseInt(val)), // pastikan datanya angka
+                        barPercentage: 0.75,
+                        categoryPercentage: 0.5
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Rp ' + value.toLocaleString("id-ID");
+                                },
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                color: "transparent"
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+
+
+@endpush
       @endsection
