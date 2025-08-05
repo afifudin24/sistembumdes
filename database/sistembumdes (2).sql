@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Agu 2025 pada 17.43
--- Versi server: 10.4.11-MariaDB
+-- Waktu pembuatan: 05 Agu 2025 pada 11.20
+-- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -52,8 +52,8 @@ INSERT INTO `admins` (`admin_id`, `nama`, `username`, `password`, `no_hp`, `stat
 --
 
 CREATE TABLE `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -64,8 +64,8 @@ CREATE TABLE `cache` (
 --
 
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -86,6 +86,14 @@ CREATE TABLE `detail_transaksi` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`detail_id`, `transaksi_id`, `produk_id`, `kuantitas`, `harga_satuan`, `subtotal`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 10, 70000.00, 700000.00, '2025-08-05 02:12:36', '2025-05-28 00:52:22'),
+(2, 1, 3, 10, 10000.00, 100000.00, '2025-08-05 02:12:36', '2025-05-28 00:52:22');
+
 -- --------------------------------------------------------
 
 --
@@ -94,11 +102,11 @@ CREATE TABLE `detail_transaksi` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -110,8 +118,8 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
   `attempts` tinyint(3) UNSIGNED NOT NULL,
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
   `available_at` int(10) UNSIGNED NOT NULL,
@@ -125,13 +133,13 @@ CREATE TABLE `jobs` (
 --
 
 CREATE TABLE `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `total_jobs` int(11) NOT NULL,
   `pending_jobs` int(11) NOT NULL,
   `failed_jobs` int(11) NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `failed_job_ids` longtext NOT NULL,
+  `options` mediumtext DEFAULT NULL,
   `cancelled_at` int(11) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
   `finished_at` int(11) DEFAULT NULL
@@ -145,13 +153,13 @@ CREATE TABLE `job_batches` (
 
 CREATE TABLE `karyawans` (
   `karyawan_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `status_akun` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
+  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -171,8 +179,8 @@ INSERT INTO `karyawans` (`karyawan_id`, `nama`, `username`, `password`, `no_hp`,
 
 CREATE TABLE `kategori` (
   `kategori_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_kategori` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_kategori` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -185,7 +193,7 @@ CREATE TABLE `kategori` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -212,13 +220,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `pelanggans` (
   `pelanggan_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
   `tanggal_daftar` datetime NOT NULL DEFAULT current_timestamp(),
-  `status_akun` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
+  `status_akun` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -239,10 +247,10 @@ INSERT INTO `pelanggans` (`pelanggan_id`, `nama`, `username`, `password`, `no_hp
 CREATE TABLE `produks` (
   `produk_id` bigint(20) UNSIGNED NOT NULL,
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_produk` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_produk` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
   `harga` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `gambar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -263,11 +271,11 @@ INSERT INTO `produks` (`produk_id`, `usaha_id`, `nama_produk`, `deskripsi`, `har
 
 CREATE TABLE `superadmins` (
   `superadmin_id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_hp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('aktif','nonaktif') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'aktif'
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -294,10 +302,10 @@ CREATE TABLE `transaksi` (
   `total_harga` decimal(12,2) NOT NULL DEFAULT 0.00,
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
   `pelanggan_id` bigint(20) UNSIGNED NOT NULL,
-  `status` enum('diproses','selesai','dibatalkan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diproses',
-  `metode_pembayaran` enum('tunai','transfer','COD') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'tunai',
-  `bukti_bayar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('diproses','selesai','dibatalkan','menunggu konfirmasi','dikirim','diterima','menunggu pembayaran') NOT NULL DEFAULT 'diproses',
+  `metode_pembayaran` enum('tunai','transfer','COD') NOT NULL DEFAULT 'tunai',
+  `bukti_bayar` varchar(255) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -307,8 +315,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`transaksi_id`, `tanggal`, `total_harga`, `usaha_id`, `pelanggan_id`, `status`, `metode_pembayaran`, `bukti_bayar`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, '2025-08-02 13:57:53', 150000.00, 1, 6, 'selesai', 'transfer', NULL, 'tidak ada keterangan', '2025-08-02 06:57:53', '2025-08-02 06:57:53'),
-(2, '2025-09-17 13:57:53', 2000000.00, 3, 6, 'selesai', 'COD', NULL, 'tidak ada keterangan', '2025-08-03 06:57:53', '2025-08-03 06:57:53');
+(1, '2025-08-02 13:57:53', 150000.00, 1, 6, 'menunggu konfirmasi', 'transfer', NULL, 'tidak ada keterangan', '2025-08-02 06:57:53', '2025-08-02 06:57:53'),
+(2, '2025-09-17 13:57:53', 2000000.00, 3, 6, 'menunggu konfirmasi', 'transfer', NULL, 'tidak ada keterangan', '2025-08-03 06:57:53', '2025-08-03 06:57:53'),
+(3, '2025-09-17 13:57:53', 2000000.00, 3, 1, 'selesai', 'transfer', NULL, 'tidak ada keterangan', '2025-08-03 06:57:53', '2025-08-03 06:57:53');
 
 -- --------------------------------------------------------
 
@@ -318,14 +327,14 @@ INSERT INTO `transaksi` (`transaksi_id`, `tanggal`, `total_harga`, `usaha_id`, `
 
 CREATE TABLE `usaha` (
   `usaha_id` bigint(20) UNSIGNED NOT NULL,
-  `nama_usaha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_usaha` varchar(255) NOT NULL,
+  `keterangan` text DEFAULT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rekening` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_rek` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `no_telepon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `rekening` varchar(255) NOT NULL,
+  `no_rek` varchar(255) NOT NULL,
+  `no_telepon` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -459,7 +468,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT untuk tabel `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `detail_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `detail_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -513,7 +522,7 @@ ALTER TABLE `superadmins`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `transaksi_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transaksi_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `usaha`

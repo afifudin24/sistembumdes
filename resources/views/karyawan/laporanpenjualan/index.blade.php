@@ -74,10 +74,10 @@
 										</tr>
 									</thead>
 									<tbody>
-                                    
+                                                                        
 @if($laporan->count() == 0)
     <tr>
-        <td colspan="5" class="text-center">Belum Ada Laporan</td>
+        <td colspan="5" class="text-center">Tidak Ada Laporan</td>
     </tr>
 @else
     @foreach($laporan as $item)
@@ -94,7 +94,6 @@
         </tr>
     @endforeach
 @endif
-
 
 									</tbody>
 								</table>

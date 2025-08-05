@@ -19,9 +19,15 @@ class ProdukController extends Controller
         $usaha = Usaha::all();
         return view('superadmin.produk.index', compact('produk', 'usaha'));
     }else if($role == 'admin'){
-         $usaha = Usaha::where('admin_id', $user->admin_id)->first();
+        $usaha = Usaha::where('admin_id', $user->admin_id)->first();
         $produk = Produk::with('usaha')->where('usaha_id', $usaha->usaha_id)->paginate(10);
         return view('admin.produk.index', compact('produk', 'usaha'));
+    }else if($role == 'karyawan'){
+          $usaha = Usaha::where('admin_id', $user->admin_id)->first();
+        $produk = Produk::with('usaha')->where('usaha_id', $user->usaha_id)->paginate(10);
+        return view('karyawan.produk.index', compact('produk'));
+    }else {
+        return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
     }
    }
        public function store(Request $request)

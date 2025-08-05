@@ -120,8 +120,8 @@
 								<i class="align-middle" data-feather="repeat"></i> <span class="align-middle">Kelola Data Transaksi</span>
 							</a>
 						</li>
-                        	<li class="sidebar-item {{ Request::is('konfirmasipembayaran') ? 'active' : ''}}">
-							<a class="sidebar-link " href="/konfirmasipembayaran">
+                        	<li class="sidebar-item {{ Request::is('datakonfirmasipembayaran') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datakonfirmasipembayaran">
 								<i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Konfirmasi Pembayaran</span>
 							</a>
 						</li>
@@ -131,6 +131,29 @@
 							</a>
 						</li>
                     @endif
+
+					@if(session()->get('role') == 'karyawan')
+					<li class="sidebar-item {{ Request::is('dataproduk') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/dataproduk">
+								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Data Produk</span>
+							</a>
+						</li>
+						<li class="sidebar-item {{ Request::is('datatransaksi') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datatransaksi">
+								<i class="align-middle" data-feather="repeat"></i> <span class="align-middle">Kelola Data Transaksi</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('datakonfirmasipembayaran') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datakonfirmasipembayaran">
+								<i class="align-middle" data-feather="dollar-sign"></i> <span class="align-middle">Konfirmasi Pembayaran</span>
+							</a>
+						</li>
+                        <li class="sidebar-item {{ Request::is('rekaplaporanpenjualan') ? 'active' : ''}}">
+							<a class="sidebar-link" href="/rekaplaporanpenjualan">
+								<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Rekap Laporan Penjualan</span>
+							</a>
+						</li>
+					@endif
 			<li class="sidebar-item">
     <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="align-middle" data-feather="log-out"></i>

@@ -31,7 +31,17 @@ class LaporanController extends Controller
             }
              $laporan = $query->paginate( 10 );
         return view( 'admin.laporanpenjualan.index', compact( 'laporan' ) );
-        }else{
+        } else if($role == 'karyawan'){
+              $query = Transaksi::with( 'usaha' )->with( 'pelanggan' )->with( 'detailTransaksi' )->where( 'status', 'selesai' )->where('usaha_id', $user->usaha_id);
+            if ( $request->filled( 'tanggal_mulai' ) && $request->filled( 'tanggal_akhir' ) ) {
+                $query->whereBetween( 'tanggal', [ $request->tanggal_mulai, $request->tanggal_akhir ] );
+            }
+             $laporan = $query->paginate( 10 );
+            
+              return view( 'karyawan.laporanpenjualan.index', compact( 'laporan' ) );
+        }
+        
+        else{
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
         }
 
@@ -56,7 +66,18 @@ class LaporanController extends Controller
             }
             $laporan = $query->get();
               $pdf = Pdf::loadView( 'admin.laporanpenjualan.pdf', compact( 'laporan' ) );
-        }else{
+
+           
+        } else if($role == 'karyawan'){
+            $query = Transaksi::with( 'usaha' )->with( 'pelanggan' )->with( 'detailTransaksi' )->where( 'status', 'selesai' )->where('usaha_id', $user->usaha_id);
+            if ( $request->filled( 'tanggal_mulai' ) && $request->filled( 'tanggal_akhir' ) ) {
+                $query->whereBetween( 'tanggal', [ $request->tanggal_mulai, $request->tanggal_akhir ] );
+            }
+            $laporan = $query->get();
+              $pdf = Pdf::loadView( 'karyawan.laporanpenjualan.pdf', compact( 'laporan' ) );
+        }
+        
+        else{
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
         }
 

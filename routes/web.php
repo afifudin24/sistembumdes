@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsahaController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\TransaksiController;
 
 use App\Http\Middleware\CekLogin;
 
@@ -40,12 +41,14 @@ Route::middleware([CekLogin::class])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Route::get('/profil', [UserController::class, 'profil'])->name('profil');
+
+     // chart
+    Route::get('/getChartData', [DashboardController::class, 'getChartData'])->name('getChartData');
+    Route::get('/chart/monthly', [DashboardController::class, 'getMonthlyChartData']);
 });
 
 // Super Admin
 Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
-
-
     // Kelola Data Super Admin
     Route::get('/datasuperadmin', [SuperAdminController::class, 'getSuperAdmin'])->name('datasuperadmin');
     Route::get('/aktifkansuperadmin/{id}' , [SuperAdminController::class, 'aktifkanSuperAdmin'])->name('aktifkansuperadmin');
@@ -58,33 +61,23 @@ Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
     Route::post('/tambahadmin' , [AdminController::class, 'store'])->name('tambahadmin');
     Route::put('/updateadmin/{id}' , [AdminController::class, 'update'])->name('updateadmin');
     Route::delete('/hapusadmin/{id}' , [AdminController::class, 'destroy'])->name('hapusadmin');
-
     // Kelola Data Pelanggan
     Route::get('/datapelanggan', [PelangganController::class, 'getPelanggan'])->name('datapelanggan');
     Route::get('/aktifkanpelanggan/{id}' , [PelangganController::class, 'aktifkanPelanggan'])->name('aktifkanpelanggan');
     Route::post('/tambahpelanggan' , [PelangganController::class, 'store'])->name('tambahpelanggan');
     Route::put('/updatepelanggan/{id}' , [PelangganController::class, 'update'])->name('updatepelanggan');
     Route::delete('/hapuspelanggan/{id}' , [PelangganController::class, 'destroy'])->name('hapuspelanggan');
-
-
-
     // Kelola Data Usaha
     Route::get('/datausaha', [UsahaController::class, 'index'])->name('datausaha');
     Route::post('/tambahusaha', [UsahaController::class, 'store'])->name('tambahusaha');
     Route::put('/updateusaha/{id}', [UsahaController::class, 'update'])->name('updateusaha');
     Route::delete('/hapususaha/{id}', [UsahaController::class, 'destroy'])->name('hapususaha');
-
-
-
 });
 
 Route::middleware([CekLogin::class . ':superadmin,admin'])->group(function () {
-    // chart
-    Route::get('/getChartData', [DashboardController::class, 'getChartData'])->name('getChartData');
-    Route::get('/chart/monthly', [DashboardController::class, 'getMonthlyChartData']);
+   
 
       // Kelola Data Produk
-    Route::get('/dataproduk', [ProdukController::class, 'index'])->name('dataproduk');
     Route::post('/tambahproduk', [ProdukController::class, 'store'])->name('tambahproduk');
     Route::put('/updateproduk/{id}', [ProdukController::class, 'update'])->name('updateproduk');
     Route::delete('/hapusproduk/{id}', [ProdukController::class, 'destroy'])->name('hapusproduk');
@@ -96,8 +89,27 @@ Route::middleware([CekLogin::class . ':superadmin,admin'])->group(function () {
     Route::put('/updatekaryawan/{id}' , [KaryawanController::class, 'update'])->name('updateKaryawan');
     Route::delete('/hapuskaryawan/{id}' , [KaryawanController::class, 'destroy'])->name('hapusKaryawan');
 
+});
+
+
+Route::middleware([CekLogin::class . ':admin,karyawan'])->group(function () {
+    // Kelola data transaksi
+    Route::get('/datatransaksi', [TransaksiController::class, 'index'])->name('datatransaksi');
+    // Route::get('/detailtransaksi/{id}', [TransaksiController::class, 'show'])->name('detailtransaksi');
+    // Route::get('/tambahtransaksi', [TransaksiController::class, 'create'])->name('tambahtransaksi');
+    // Route::post('/simpantransaksi', [TransaksiController::class, 'store'])->name('simpantransaksi');
+    // Route::get('/edittransaksi/{id}', [TransaksiController::class, 'edit'])->name('edittransaksi');
+    Route::put('/updatetransaksi/{id}', [TransaksiController::class, 'update'])->name('updatetransaksi');
+    Route::delete('/hapustransaksi/{id}', [TransaksiController::class, 'destroy'])->name('hapustransaksi');
+
+    // Konfirmasi Pembayaran
+    Route::get('/datakonfirmasipembayaran', [TransaksiController::class, 'getKonfirmasiPembayaran'])->name('datakonfirmasipembayaran');
+    
     // Rekap Laporan Penjualan
     Route::get('rekaplaporanpenjualan', [LaporanController::class, 'index'])->name('rekaplaporanpenjualan');
     Route::get('eksporlaporanpenjualan', [LaporanController::class, 'exportToPDF'])->name('eksporlaporanpenjualan');
+
+    // Data produk
+    Route::get('/dataproduk', [ProdukController::class, 'index'])->name('dataproduk');
 
 });

@@ -3,15 +3,11 @@
 @section('content')
 <main class="content">
 				<div class="container-fluid p-0">
-
-					<h1 class="h3 mb-3">Kelola Data Transaksi</h1>
-
-
+					<h1 class="h3 mb-3">Konfirmasi Pembayaran</h1>
 					<div class="row">
 						<div class="col-12 col-lg-12 col-xxl-9 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
-
 									{{-- <h5 class="card-title mb-0">Data produk</h5> --}}
 
                          @if ($errors->any())
@@ -32,30 +28,18 @@
     </div>
 @endif
 
-<!--
-                                    <div>
-
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahproduk">
-                                            Tambah Produk
-                                        </button>
-                                    </div> -->
 								</div>
                                 <!-- wadah table -->
 
                                 <div class="table-responsive">
-
-
-
 								<table class="table table-hover my-0">
 									<thead>
 										<tr>
 
 											<th class="">ID Transaksi</th>
 											<th class="">Nama Pelanggan</th>
-											<th class="">Usaha</th>
-											<th class="d-none d-xl-table-cell">Tanggal</th>
 											<th class="d-none d-xl-table-cell">Total Harga</th>
-											<th class="d-none d-xl-table-cell">Metode Bayar</th>
+											<th class="d-none d-xl-table-cell">Bukti Bayar</th>
 											<th class="d-none d-xl-table-cell">Status</th>
 											<th>Aksi</th>
 										</tr>
@@ -65,23 +49,26 @@
 										<tr>
 											<td class="">{{$item->transaksi_id}}</td>
 											<td class="">{{$item->pelanggan->nama}}</td>
-											<td class="">{{$item->usaha->nama_usaha}}</td>
-											<td class="">{{formatTanggal($item->tanggal)}}</td>
+										
+								
                                          <td class="d-none d-xl-table-cell">
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
-											<td class="d-none d-xl-table-cell text-capitalize">{{$item->metode_pembayaran}}</td>
+                      <td class="d-none d-xl-table-cell text-capitalize">
+                        <a class="btn btn-info"  href="{{asset('storage/'.$item->bukti_bayar)}}">
+                        Cek Bukti Bayar
+                        </a>
+                        </td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}</td>
 
-										<td class="">
-    <!-- Detail Button -->
-    <button class="btn btn-success btnDetail" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalDetail" >
-        <span class="d-none d-xl-inline">Detail</span>
-        <i data-feather="eye" class="d-inline d-xl-none"></i>
-    </button>
-    <button class="btn btn-warning btnProduk" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalProduk">
-         <i data-feather="package" class=""></i>
-    </button>
+										<td class="d-flex gap-2">
+                    <a class="btn btn-success" href="/konfirmasipembayaran/{{$item->transaksi_id}}">
+                    Konfirmasi
+                    </a>
+
+                    <a class="btn btn-danger" href="/tolakpembayaran/{{$item->transaksi_id}}">
+                      Tolak
+                    </a>
 
 
 </td>
