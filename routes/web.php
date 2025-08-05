@@ -12,11 +12,12 @@ use App\Http\Controllers\UsahaController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\PesananController;
 
 use App\Http\Middleware\CekLogin;
 
 Route::get('/', [LandingPageController::class, 'index']);
-
+Route::get('/listproduk', [LandingPageController::class, 'listproduk'])->name('listproduk');
 
 // auth
 Route::get('/login', function () {
@@ -33,6 +34,8 @@ Route::get('/register', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 
 // Perlu Login
 Route::middleware([CekLogin::class])->group(function () {
@@ -75,7 +78,7 @@ Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
 });
 
 Route::middleware([CekLogin::class . ':superadmin,admin'])->group(function () {
-   
+
 
       // Kelola Data Produk
     Route::post('/tambahproduk', [ProdukController::class, 'store'])->name('tambahproduk');
@@ -104,7 +107,7 @@ Route::middleware([CekLogin::class . ':admin,karyawan'])->group(function () {
 
     // Konfirmasi Pembayaran
     Route::get('/datakonfirmasipembayaran', [TransaksiController::class, 'getKonfirmasiPembayaran'])->name('datakonfirmasipembayaran');
-    
+
     // Rekap Laporan Penjualan
     Route::get('rekaplaporanpenjualan', [LaporanController::class, 'index'])->name('rekaplaporanpenjualan');
     Route::get('eksporlaporanpenjualan', [LaporanController::class, 'exportToPDF'])->name('eksporlaporanpenjualan');
@@ -112,4 +115,12 @@ Route::middleware([CekLogin::class . ':admin,karyawan'])->group(function () {
     // Data produk
     Route::get('/dataproduk', [ProdukController::class, 'index'])->name('dataproduk');
 
+});
+
+
+Route::middleware([CekLogin::class .':pelanggan'])->group(function () {
+    Route::get('/datapesanan', [PesananController::class, 'index'])->name('datapesanan');
+
+    Route::get('/pesan', [PesananController::class, 'pesan'])->name('pesan');
+    Route::post('checkout', [PesananController::class, 'checkout'])->name('checkout');
 });

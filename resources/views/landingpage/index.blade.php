@@ -24,7 +24,7 @@
           <li class="nav-item"><a class="nav-link" href="#produk">Produk</a></li>
           <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
           <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
-        </ul>
+    </ul>
         @if(session('login') === true)
           <a href="/dashboard" class="btn btn-light">Dashboard</a>
         @else
@@ -40,7 +40,7 @@
           <img class="img-fluid rounded mb-4" loading="lazy" src="{{ asset('assets/images/logoo.jpg') }}" width="245" height="80" alt="BootstrapBrain Logo">
       <h1 class="display-4">Selamat Datang di BUMDes Mugi Rahayu</h1>
       <p class="lead">   Membangun Kemandirian, Menuai Kemakmuran.</p>
-      <a href="#produk" class="btn btn-success mt-3">Lihat Produk</a>
+      <a href="/listproduk" class="btn btn-success mt-3">Lihat Produk</a>
     </div>
   </section>
 
@@ -70,45 +70,25 @@
       <h2 class="text-center mb-4">Produk & Layanan</h2>
       <div class="row">
         <!-- Produk 1 -->
+         @foreach ($produks as $item)
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="https://source.unsplash.com/400x300/?agriculture" class="card-img-top" alt="Produk 1">
+            <img src="{{ asset('storage/'.$item->gambar) }}" class="card-img-top" alt="Produk {{$item->produk_id}}">
             <div class="card-body">
-              <h5 class="card-title">Pupuk Organik</h5>
-              <p class="card-text">Pupuk alami hasil olahan lokal untuk pertanian berkelanjutan.</p>
-              <p class="text-success fw-bold">Rp 25.000 / 5kg</p>
+              <h4 class="card-title">{{$item->nama_produk}}</h4>
+              <h5 class="card-title">{{$item->usaha->nama_usaha}}</h5>
+              <p class="card-text">{{$item->deskripsi}}</p>
+              <p class="text-success fw-bold">{{formatRupiah($item->harga)}}</p>
             </div>
           </div>
         </div>
+        @endforeach
 
-        <!-- Produk 2 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="https://source.unsplash.com/400x300/?farming,tools" class="card-img-top" alt="Produk 2">
-            <div class="card-body">
-              <h5 class="card-title">Sewa Traktor</h5>
-              <p class="card-text">Layanan sewa traktor untuk membantu petani dalam pengolahan lahan.</p>
-              <p class="text-success fw-bold">Rp 150.000 / hari</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Produk 3 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <img src="https://source.unsplash.com/400x300/?rice,sale" class="card-img-top" alt="Produk 3">
-            <div class="card-body">
-              <h5 class="card-title">Beras Desa</h5>
-              <p class="card-text">Beras berkualitas langsung dari petani desa kami.</p>
-              <p class="text-success fw-bold">Rp 12.000 / kg</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <div class="text-center d-flex justify-content-center">
 
-        <a href="/pesanproduk" class="btn btn-success mx-2">
+        <a href="/pesan" class="btn btn-success mx-2">
         Pesan Sekarang
         </a>
     </div>

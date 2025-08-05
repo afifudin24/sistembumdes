@@ -18,12 +18,13 @@ class Transaksi extends Model {
     // Jika tidak ada kolom created_at dan updated_at
 
     protected $fillable = [
+        'transaksi_id',
         'pelanggan_id',
-        'nama_penerima',
-        'alamat',
+        'usaha_id',
         'tanggal',
         'total_harga',
-        'status_transaksi',
+        'status',
+        'bukti_bayar',
         'metode_pembayaran',
         'keterangan',
     ];

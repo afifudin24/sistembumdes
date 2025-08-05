@@ -38,6 +38,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </head>
 
@@ -45,7 +47,7 @@
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
+				<a class="sidebar-brand" href="/">
           <span class="align-middle">Mugi Rahayu</span>
         </a>
 
@@ -154,6 +156,24 @@
 							</a>
 						</li>
 					@endif
+
+                    @if(session()->get('role') == 'pelanggan')
+                        	<li class="sidebar-item {{ Request::is('pesan') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/pesan">
+								<i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Pesan</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('datapesanan') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/datapesanan">
+								<i class="align-middle" data-feather="package"></i> <span class="align-middle">Data Pesanan</span>
+							</a>
+						</li>
+                        	<li class="sidebar-item {{ Request::is('rekapriwayatpembelian') ? 'active' : ''}}">
+							<a class="sidebar-link " href="/rekapriwayatpembelian">
+								<i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Rekap Riwayat Pembelian</span>
+							</a>
+						</li>
+                    @endif
 			<li class="sidebar-item">
     <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
         <i class="align-middle" data-feather="log-out"></i>
