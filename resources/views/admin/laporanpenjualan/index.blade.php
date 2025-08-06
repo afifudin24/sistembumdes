@@ -8,7 +8,7 @@
 
 
 					<div class="row">
-						<div class="col-12 col-lg-12 col-xxl-9 d-flex">
+						<div class="col-12 col-lg-12 col-xxl-12 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -74,7 +74,7 @@
 										</tr>
 									</thead>
 									<tbody>
-                                    
+
 @if($laporan->count() == 0)
     <tr>
         <td colspan="5" class="text-center">Belum Ada Laporan</td>

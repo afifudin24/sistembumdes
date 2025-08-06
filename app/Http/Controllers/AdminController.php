@@ -95,7 +95,7 @@ class AdminController extends Controller
     // Validasi input
     $validated = $request->validate([
         'nama' => 'required|string|max:255',
-      'username' => 'required|string|max:255|unique:admins,username,' . $id . ',id',
+      'username' => 'required|string|max:255|unique:admins,username,' . $id . ',admin_id',
         'status' => 'required|in:aktif,nonaktif',
         'nohp' => 'required|string|max:20',
     ], [

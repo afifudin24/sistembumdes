@@ -5,7 +5,7 @@
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3">Konfirmasi Pembayaran</h1>
 					<div class="row">
-						<div class="col-12 col-lg-12 col-xxl-9 d-flex">
+						<div class="col-12 col-lg-12 col-xxl-12 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
 									{{-- <h5 class="card-title mb-0">Data produk</h5> --}}
@@ -49,13 +49,13 @@
 										<tr>
 											<td class="">{{$item->transaksi_id}}</td>
 											<td class="">{{$item->pelanggan->nama}}</td>
-										
-								
+
+
                                          <td class="d-none d-xl-table-cell">
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
-                      <td class="d-none d-xl-table-cell text-capitalize">
-                        <a class="btn btn-info"  href="{{asset('storage/'.$item->bukti_bayar)}}">
+                    <td class="d-none d-xl-table-cell text-capitalize">
+                        <a target='_blank' class="btn btn-info"  href="{{asset('storage/app/public/'.$item->bukti_bayar)}}">
                         Cek Bukti Bayar
                         </a>
                         </td>
@@ -327,7 +327,7 @@
     $('#tanggalDetail').html(item.tanggal ?? '-');
     $('#statusDetail').html(item.status ?? '-');
     $('#keteranganDetail').html(item.keterangan ?? '-');
-    
+
 
 });
 

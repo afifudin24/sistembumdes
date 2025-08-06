@@ -98,7 +98,7 @@ class SuperadminController extends Controller {
     // Validasi input
     $validated = $request->validate([
         'nama' => 'required|string|max:255',
-     'username' => 'required|string|max:255|unique:superadmins,username,' . $id . ',id',
+     'username' => 'required|string|max:255|unique:superadmins,username,' . $id . ',superadmin_id',
 
         'status' => 'required|in:aktif,nonaktif',
         'nohp' => 'required|string|max:20',

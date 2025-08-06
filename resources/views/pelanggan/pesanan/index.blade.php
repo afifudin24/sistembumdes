@@ -73,9 +73,9 @@
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->metode_pembayaran}}</td>
-											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}} 
+											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}
                       <br>
-                      @if($item->status == 'perlu bayar')  
+                      @if($item->status == 'perlu bayar')
                         <!-- Button trigger modal -->
 <button type="button" class="btn btnUploadBukti btn-primary btn-sm" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#uploadBuktiModal">
   Upload Bukti
@@ -103,7 +103,7 @@
           @if($item->bukti_bayar)
             <div class="mb-3 text-center">
               <p class="fw-bold">Bukti Bayar Saat Ini:</p>
-             <img src="{{ asset('storage/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
+             <img src="{{ asset('storage/app/public/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
 
             </div>
           @else
@@ -131,12 +131,12 @@
                           @csrf
                           <button class="btn btn-sm btn-secondary" type="submit">Terima</button>
                         </form>
-                 
+
 @endif
                       </td>
 
 										<td class="">
-                    
+
     <!-- Detail Button -->
     <button class="btn btn-success btnDetail" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalDetail" >
         <span class="d-none d-xl-inline">Detail</span>
@@ -149,8 +149,8 @@
     <a class="btn btn-danger" href="{{ url('/batalkanpesanan/' . $item->transaksi_id) }}">
      <i data-feather="x"></i>
     </a>
-   
-    
+
+
     @endif
 
 
@@ -174,7 +174,7 @@
 			</main>
 
       {{-- Modal Bukti Bayar --}}
-      
+
 <!-- Modal -->
 <div class="modal fade" id="uploadBuktiModal" tabindex="-1" aria-labelledby="uploadBuktiModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -214,7 +214,7 @@
       <div class="modal-body">
         <table class="table table-bordered mb-0">
           <tbody id="tbodyDetail">
-         
+
             <tr>
               <th scope="row">Total Harga</th>
               <td id="totalDetail">-</td>
@@ -432,13 +432,13 @@
     console.log(item);
 
     $('#namaUsahaDetail').html(item.usaha.nama_usaha ?? '-');
-  
+
     $('#totalDetail').html(item.total_harga ?? '-');
     $('#metodePembayaranDetail').html(item.metode_pembayaran ?? '-');
     $('#tanggalDetail').html(item.tanggal ?? '-');
     $('#statusDetail').html(item.status ?? '-');
     $('#keteranganDetail').html(item.keterangan ?? '-');
-   
+
     if (item.bukti_bayar) {
         $('#buktiBayarDetail').attr('src', '/storage/' + item.bukti_bayar).show();
     } else {
@@ -446,7 +446,7 @@
         $('#buktiDetail').html('-');
         $('#buktiBayarDetail').attr('src', '').hide();
     }
-   
+
 
 });
 
@@ -477,12 +477,12 @@
 )
 
 
-        
+
 });
 
 
 
-        
+
     </script>
 
     <script>

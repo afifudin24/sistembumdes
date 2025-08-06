@@ -8,7 +8,7 @@
 
 
 					<div class="row">
-						<div class="col-12 col-lg-12 col-xxl-9 d-flex">
+						<div class="col-12 col-lg-12 col-xxl-12 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -93,14 +93,14 @@
           @if($item->bukti_bayar)
             <div class="mb-3 text-center">
               <p class="fw-bold">Bukti Bayar Saat Ini:</p>
-             <img src="{{ asset('storage/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
+             <img src="{{ asset('storage/app/public/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
 
             </div>
           @else
             <p class="text-muted text-center">Belum ada bukti bayar diunggah.</p>
           @endif
 
-         
+
 
         </div>
         <div class="modal-footer">
@@ -395,7 +395,7 @@
     $('#tanggalDetail').html(item.tanggal ?? '-');
     $('#statusDetail').html(item.status ?? '-');
     $('#keteranganDetail').html(item.keterangan ?? '-');
-    
+
 
 });
 
@@ -432,7 +432,7 @@
     $('#editDeskripsi').val(item.deskripsi);
 
     if (item.gambar) {
-        $('#previewGambarEdit').attr('src', '/storage/' + item.gambar).show();
+        $('#previewGambarEdit').attr('src', '/storage/app/public/' + item.gambar).show();
     } else {
         $('#previewGambarEdit').hide();
     }

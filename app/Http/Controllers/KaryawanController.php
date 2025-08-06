@@ -109,7 +109,7 @@ class KaryawanController extends Controller
 
       public function update(Request $request, $id)
 {
-    $role = session()->get('user')->role;
+      $role = session()->get( 'role' );
     if($role == 'superadmin') {
          $validated = $request->validate([
         'nama' => 'required|string|max:255',

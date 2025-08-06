@@ -15,18 +15,16 @@ use Illuminate\Support\Facades\Storage;
 
 class PesananController extends Controller
 {
-/*************  ✨ Windsurf Command ⭐  *************/
     /**
      * Display a list of transactions for the current user.
      *
      * Retrieves the logged-in user's transactions, including related data
-     * such as the associated business, customer, and detailed transaction 
+     * such as the associated business, customer, and detailed transaction
      * products. The transactions are paginated for display in the view.
      *
      * @return \Illuminate\View\View
      */
 
-/*******  d757155a-c9e9-46bb-ada6-0cc6f77c6d8a  *******/
     public function index(){
         $user = session()->get('user');
         $transaksi = Transaksi::where('pelanggan_id', $user->pelanggan_id)->with('usaha')->with('pelanggan')->with('detailTransaksi.produk')->paginate(10);
@@ -85,7 +83,7 @@ public function checkout(Request $request)
                 $total += $i['qty'] * $i['harga'];
             }
 
-            $transaksiId = now()->format('YmdHis') . rand(100, 999); // angka bigint unik
+             $transaksiId = now()->format('ymd') . rand(10, 99); // Contoh:
 
             $transaksi = Transaksi::create([
                 'transaksi_id' => $transaksiId,

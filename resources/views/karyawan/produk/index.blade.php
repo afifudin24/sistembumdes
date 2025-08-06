@@ -33,7 +33,7 @@
 @endif
 
 
-                                
+
 								</div>
                                 <!-- wadah table -->
 
@@ -149,7 +149,7 @@
     $('#keteranganDetail').html(item.deskripsi ?? '-');
 
     if (item.gambar) {
-        $('#gambarProdukDetail').attr('src', '/storage/' + item.gambar).show();
+        $('#gambarProdukDetail').attr('src', '/storage/app/public/' + item.gambar).show();
     } else {
         $('#gambarProdukDetail').attr('src', '').hide();
     }
