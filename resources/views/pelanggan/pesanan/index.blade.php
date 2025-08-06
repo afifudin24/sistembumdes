@@ -23,6 +23,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+@endif
 
 @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -47,8 +53,7 @@
 									<thead>
 										<tr>
 
-											<th class="">ID Transaksi</th>
-
+											<th class="">ID</th>
 											<th class="">Usaha</th>
 											<th class="d-none d-xl-table-cell">Tanggal</th>
 											<th class="d-none d-xl-table-cell">Total Harga</th>
@@ -68,9 +73,70 @@
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->metode_pembayaran}}</td>
-											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}</td>
+											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}} 
+                      <br>
+                      @if($item->status == 'perlu bayar')  
+                        <!-- Button trigger modal -->
+<button type="button" class="btn btnUploadBukti btn-primary btn-sm" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#uploadBuktiModal">
+  Upload Bukti
+</button>
+@elseif($item->status == 'menunggu konfirmasi')
+  <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cekBuktiModal{{ $item->transaksi_id }}">
+  Cek Bukti Bayar
+</button>
+
+
+{{-- Update bukti --}}
+  <!-- Modal -->
+<div class="modal fade" id="cekBuktiModal{{ $item->transaksi_id }}" tabindex="-1" aria-labelledby="cekBuktiLabel{{ $item->transaksi_id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ url('/uploadbuktibayar/' . $item->transaksi_id) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cekBuktiLabel{{ $item->transaksi_id }}">Cek & Perbarui Bukti Bayar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+
+          @if($item->bukti_bayar)
+            <div class="mb-3 text-center">
+              <p class="fw-bold">Bukti Bayar Saat Ini:</p>
+             <img src="{{ asset('storage/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
+
+            </div>
+          @else
+            <p class="text-muted text-center">Belum ada bukti bayar diunggah.</p>
+          @endif
+
+          <div class="mb-3">
+            <label for="bukti_bayar_{{ $item->transaksi_id }}" class="form-label">Perbarui Bukti Bayar</label>
+            <input class="form-control" type="file" id="bukti_bayar_{{ $item->transaksi_id }}" name="bukti_bayar" accept="image/*" required>
+            <div class="form-text">File berupa gambar (jpg, png, jpeg, gif) maks. 2MB.</div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-success">Perbarui Bukti</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{-- end update bukti --}}
+  @elseif($item->status == 'dikirim')
+                        <form action="/pesananditerima/{{$item->transaksi_id}}" method="POST">
+                          @csrf
+                          <button class="btn btn-sm btn-secondary" type="submit">Terima</button>
+                        </form>
+                 
+@endif
+                      </td>
 
 										<td class="">
+                    
     <!-- Detail Button -->
     <button class="btn btn-success btnDetail" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalDetail" >
         <span class="d-none d-xl-inline">Detail</span>
@@ -79,6 +145,13 @@
     <button class="btn btn-warning btnProduk" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalProduk">
          <i data-feather="package" class=""></i>
     </button>
+    @if($item->status == 'antrian' || $item->status == 'perlu bayar')
+    <a class="btn btn-danger" href="{{ url('/batalkanpesanan/' . $item->transaksi_id) }}">
+     <i data-feather="x"></i>
+    </a>
+   
+    
+    @endif
 
 
 </td>
@@ -100,6 +173,36 @@
 				</div>
 			</main>
 
+      {{-- Modal Bukti Bayar --}}
+      
+<!-- Modal -->
+<div class="modal fade" id="uploadBuktiModal" tabindex="-1" aria-labelledby="uploadBuktiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="formBuktiBayar" action="/uploadbuktibayar" method="POST" enctype="multipart/form-data">
+      <!-- Jika pakai Laravel -->
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadBuktiModalLabel">Upload Bukti Pembayaran</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="bukti_bayar" class="form-label">Upload Bukti Bayar</label>
+            <input class="form-control" type="file" id="bukti_bayar" name="bukti_bayar" accept="image/*,application/pdf" required>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Kirim Bukti</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{-- Bukti Bayar --}}
+
          <!-- Modal Detail -->
 <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -110,15 +213,8 @@
       </div>
       <div class="modal-body">
         <table class="table table-bordered mb-0">
-          <tbody>
-         <tr>
-              <th scope="row">Pelanggan</th>
-              <td id="pelangganDetail">-</td>
-            </tr>
-               <tr>
-              <th scope="row">Alamat Pelanggan</th>
-              <td id="pelangganAlamatDetail">-</td>
-            </tr>
+          <tbody id="tbodyDetail">
+         
             <tr>
               <th scope="row">Total Harga</th>
               <td id="totalDetail">-</td>
@@ -147,6 +243,12 @@
               <th scope="row">Keterangan</th>
               <td id="keteranganDetail" class="">
                 -
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Bukti Bayar</th>
+              <td id="buktiDetail" class="">
+                <img src="" id="buktiBayarDetail" alt="Bukti Bayar" class="img-fluid rounded" style="max-width: 150px;">
               </td>
             </tr>
           </tbody>
@@ -330,14 +432,21 @@
     console.log(item);
 
     $('#namaUsahaDetail').html(item.usaha.nama_usaha ?? '-');
-    $('#pelangganDetail').html(item.pelanggan.nama ?? '-');
-    $('#pelangganAlamatDetail').html(item.pelanggan.alamat ?? '-');
+  
     $('#totalDetail').html(item.total_harga ?? '-');
     $('#metodePembayaranDetail').html(item.metode_pembayaran ?? '-');
     $('#tanggalDetail').html(item.tanggal ?? '-');
     $('#statusDetail').html(item.status ?? '-');
     $('#keteranganDetail').html(item.keterangan ?? '-');
+   
+    if (item.bukti_bayar) {
+        $('#buktiBayarDetail').attr('src', '/storage/' + item.bukti_bayar).show();
+    } else {
 
+        $('#buktiDetail').html('-');
+        $('#buktiBayarDetail').attr('src', '').hide();
+    }
+   
 
 });
 
@@ -360,39 +469,20 @@
 
   });
 
+  $(".btnUploadBukti").on('click', function() {
+    var item = $(this).data('item') ;
+    console.log(item);
+    $('#formBuktiBayar').attr('action', '/uploadbuktibayar/' + item.transaksi_id);
+  }
+)
 
-           $('.btnEdit').on('click', function () {
 
- var item = $(this).data('item');
-
-    $('#editprodukForm').attr('action', '/produk/' + item.produk_id); // pastikan route-nya sesuai
-
-    $('#editProdukId').val(item.produk_id);
-    $('#editNamaProduk').val(item.nama_produk);
-    $('#editUsaha').val(item.usaha_id);
-    $('#editHarga').val(item.harga);
-    $('#editDeskripsi').val(item.deskripsi);
-
-    if (item.gambar) {
-        $('#previewGambarEdit').attr('src', '/storage/' + item.gambar).show();
-    } else {
-        $('#previewGambarEdit').hide();
-    }
-   $('#editprodukForm').attr('action', '/updateproduk/' + item.produk_id); // ganti 'id' jika ID utama bukan 'id'
+        
 });
 
-        });
-
-         $('.btnHapus').on('click', function () {
-      const item = $(this).data('item');
 
 
-      // Set nama di modal
-      $('#namaHapus').text(item.nama_produk);
-
-      // Set action form
-      $('#formHapusproduk').attr('action', '/hapusproduk/' + item.produk_id);
-    });
+        
     </script>
 
     <script>

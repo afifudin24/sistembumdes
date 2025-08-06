@@ -61,6 +61,35 @@ class TransaksiController extends Controller
         return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
        }
 }
+
+    public function konfirmasiPembayaran($id){
+        $transaksi = Transaksi::find($id);
+        if(!$transaksi){
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan');
+        }
+        $transaksi->status = 'diproses';
+        $transaksi->save();
+        return redirect()->route('datatransaksi')->with('success', 'Bukti pembayaran berhasil dikonfirmasi');
+    }
+
+    public function prosesPesanan($id){
+        $transaksi = Transaksi::find($id);
+        if(!$transaksi){
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan');
+        }
+        $transaksi->status = 'diproses';
+        $transaksi->save();
+        return redirect()->route('datatransaksi')->with('success', 'Pesanan diproses');
+    }
+    public function kirimPesanan($id){
+        $transaksi = Transaksi::find($id);
+        if(!$transaksi){
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan');
+        }
+        $transaksi->status = 'dikirim';
+        $transaksi->save();
+        return redirect()->route('datatransaksi')->with('success', 'Pesanan dikirim');
+    }
     /**
      * Show the form for creating a new resource.
      */

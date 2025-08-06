@@ -40,9 +40,19 @@ class LaporanController extends Controller
             
               return view( 'karyawan.laporanpenjualan.index', compact( 'laporan' ) );
         }
+
+        else if($role == 'pelanggan'){
+             $query = Transaksi::with( 'usaha' )->with( 'pelanggan' )->with( 'detailTransaksi' )->where( 'status', 'selesai' )->where('pelanggan_id', $user->pelanggan_id);
+            if ( $request->filled( 'tanggal_mulai' ) && $request->filled( 'tanggal_akhir' ) ) {
+                $query->whereBetween( 'tanggal', [ $request->tanggal_mulai, $request->tanggal_akhir ] );
+            }
+             $laporan = $query->paginate( 10 );
+            
+              return view( 'pelanggan.laporanpembelian.index', compact( 'laporan' ) );
+        }
         
         else{
-            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk halaman ini.');
         }
 
 
@@ -76,9 +86,17 @@ class LaporanController extends Controller
             $laporan = $query->get();
               $pdf = Pdf::loadView( 'karyawan.laporanpenjualan.pdf', compact( 'laporan' ) );
         }
+        else if($role == 'pelanggan'){
+            $query = Transaksi::with( 'usaha' )->with( 'pelanggan' )->with( 'detailTransaksi' )->where( 'status', 'selesai' )->where('pelanggan_id', $user->pelanggan_id);
+            if ( $request->filled( 'tanggal_mulai' ) && $request->filled( 'tanggal_akhir' ) ) {
+                $query->whereBetween( 'tanggal', [ $request->tanggal_mulai, $request->tanggal_akhir ] );
+            }
+            $laporan = $query->get();
+              $pdf = Pdf::loadView( 'pelanggan.laporanpembelian.pdf', compact( 'laporan' ) );
+        }
         
         else{
-            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk halaman ini.');
         }
 
         return $pdf->download( 'laporan_penjualan.pdf' );

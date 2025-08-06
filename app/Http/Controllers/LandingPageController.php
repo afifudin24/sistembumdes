@@ -18,7 +18,7 @@ class LandingPageController extends Controller {
     if ($request->has('usaha_id') && $request->usaha_id != '') {
         $produks = Produk::where('usaha_id', $request->usaha_id)->paginate(10);
     } else {
-        $produks = Produk::paginate(2);
+        $produks = Produk::paginate(10);
     }
 
     return view('landingpage.listproduk', compact('produks', 'usaha'));

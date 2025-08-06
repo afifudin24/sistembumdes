@@ -19,3 +19,12 @@ if ( !function_exists( 'formatTanggal' ) ) {
         // Format: 02/08/25
     }
 }
+
+if (!function_exists('potongDeskripsi')) {
+    function potongDeskripsi($teks, $maks = 20)
+    {
+        return strlen($teks) > $maks
+            ? substr($teks, 0, $maks) . '............'
+            : $teks;
+    }
+}

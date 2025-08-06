@@ -67,7 +67,7 @@
                                          <td class="d-none d-xl-table-cell">
                                          {{ formatRupiah($item->harga)}}
                                         </td>
-											<td class="d-none d-xl-table-cell">{{$item->deskripsi}}</td>
+											<td class="d-none d-xl-table-cell">{{potongDeskripsi($item->deskripsi) }}</td>
 
 										<td class="">
     <!-- Detail Button -->

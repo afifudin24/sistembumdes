@@ -37,11 +37,11 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="dollar-sign"></i>
+															<i class="align-middle" data-feather="x"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">{{formatRupiah($transaksiBatal) ?? 0}}</h1>
+												<h1 class="mt-1 mb-3">{{$transaksiBatal ?? 0}}</h1>
 
 											</div>
 										</div>
@@ -156,7 +156,7 @@
 											<td class="d-none d-xl-table-cell">{{$item->pelanggan->nama}}</td>
 											<td><span class="badge bg-success">{{formatRupiah($item->total_harga)}}</span></td>
 											<td class="d-none d-md-table-cell">
-                                                <button class="btn btn-success" class="d-flex align-items-center">
+                                                <button class="btn btn-success btnDetail" data-bs-toggle="modal" data-bs-target="#modalDetail" data-item="{{$item}}" class="d-flex align-items-center">
                                                 <i data-feather="eye"></i>
                                                 <span>
                                                     Detail
@@ -186,9 +186,83 @@
 
 				</div>
 			</main>
+			  <!-- Modal Detail -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalDetailLabel">Detail Transaksi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered mb-0">
+          <tbody>
+         <tr>
+              <th scope="row">Pelanggan</th>
+              <td id="pelangganDetail">-</td>
+            </tr>
+               <tr>
+              <th scope="row">Alamat Pelanggan</th>
+              <td id="pelangganAlamatDetail">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Total Harga</th>
+              <td id="totalDetail">-</td>
+            </tr>
+            <tr>
+            <tr>
+              <th scope="row">Usaha</th>
+              <td id="namaUsahaDetail">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Tanggal</th>
+              <td id="tanggalDetail">-</td>
+            </tr>
+            <tr>
+              <th scope="row">Metode Pembayaran</th>
+              <td id="metodePembayaranDetail">-</td>
+            </tr>
+
+            <tr>
+              <th scope="row">Status</th>
+              <td id="statusDetail" class="text-capitalize">
+                -
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">Keterangan</th>
+              <td id="keteranganDetail" class="">
+                -
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal Detail -->
 
 
 @push('scripts')
+
+<script>
+	 $('.btnDetail').on('click', function () {
+    var item = $(this).data('item');
+    console.log(item);
+    $('#namaUsahaDetail').html(item.usaha.nama_usaha ?? '-');
+    $('#pelangganDetail').html(item.pelanggan.nama ?? '-');
+    $('#pelangganAlamatDetail').html(item.pelanggan.alamat ?? '-');
+    $('#totalDetail').html(item.total_harga ?? '-');
+    $('#metodePembayaranDetail').html(item.metode_pembayaran ?? '-');
+    $('#tanggalDetail').html(item.tanggal ?? '-');
+    $('#statusDetail').html(item.status ?? '-');
+    $('#keteranganDetail').html(item.keterangan ?? '-');
+});
+</script>
 
 	<script>
 document.addEventListener("DOMContentLoaded", function () {

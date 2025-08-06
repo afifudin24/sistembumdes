@@ -11,10 +11,22 @@ use Carbon\Carbon;
 use App\Models\DetailTransaksi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 class PesananController extends Controller
 {
+/*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Display a list of transactions for the current user.
+     *
+     * Retrieves the logged-in user's transactions, including related data
+     * such as the associated business, customer, and detailed transaction 
+     * products. The transactions are paginated for display in the view.
+     *
+     * @return \Illuminate\View\View
+     */
+
+/*******  d757155a-c9e9-46bb-ada6-0cc6f77c6d8a  *******/
     public function index(){
         $user = session()->get('user');
         $transaksi = Transaksi::where('pelanggan_id', $user->pelanggan_id)->with('usaha')->with('pelanggan')->with('detailTransaksi.produk')->paginate(10);
@@ -104,4 +116,64 @@ public function checkout(Request $request)
         return response()->json(['message' => 'Checkout gagal', 'error' => $e->getMessage()], 500);
     }
 }
+
+public function uploadBuktiBayar(Request $request, $id)
+{
+    $transaksi = Transaksi::find($id);
+
+    // Cek apakah transaksi milik pelanggan yang sedang login
+    if (!$transaksi || $transaksi->pelanggan_id !== session()->get('user')->pelanggan_id) {
+        return redirect()->route('datapesanan')->with('error', 'Transaksi tidak ditemukan');
+    }
+
+    // Validasi bukti bayar
+    $request->validate([
+        'bukti_bayar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ], [
+        'bukti_bayar.required' => 'Bukti bayar wajib diunggah.',
+        'bukti_bayar.image'    => 'File yang diunggah harus berupa gambar.',
+        'bukti_bayar.mimes'    => 'Bukti bayar harus berupa file dengan format jpeg, png, jpg, atau gif.',
+        'bukti_bayar.max'      => 'Ukuran bukti bayar maksimal 2MB.',
+    ]);
+
+    // Hapus foto sebelumnya jika ada
+    if ($transaksi->bukti_bayar && Storage::disk('public')->exists($transaksi->bukti_bayar)) {
+        Storage::disk('public')->delete($transaksi->bukti_bayar);
+    }
+
+    // Simpan foto baru
+    $buktiBaru = $request->file('bukti_bayar');
+    $buktiBaruPath = $buktiBaru->store('bukti_bayar', 'public');
+
+    // Update data transaksi
+    $transaksi->bukti_bayar = $buktiBaruPath;
+    $transaksi->status = 'menunggu konfirmasi';
+    $transaksi->save();
+
+    return redirect()->back()->with('success', 'Bukti bayar berhasil diunggah.');
+}
+
+    public function pesananDiterima($id){
+        $transaksi = Transaksi::find($id);
+        if($transaksi->pelanggan_id !== session()->get('user')->pelanggan_id){
+            // tidak memiliki akses
+            return redirect()->route('datapesanan')->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
+        }else{
+            $transaksi->status = 'diterima';
+            $transaksi->save();
+            return redirect()->route('datapesanan')->with('success', 'Pesanan diterima');
+        }
+    }
+
+    public function batalkanPesanan($id){
+        $transaksi = Transaksi::find($id);
+        if($transaksi->pelanggan_id !== session()->get('user')->pelanggan_id){
+            // tidak memiliki akses
+            return redirect()->route('datapesanan')->with('error', 'Anda tidak memiliki akses untuk menambah produk.');
+        }else{
+            $transaksi->status = 'dibatalkan';
+            $transaksi->save();
+            return redirect()->route('datapesanan')->with('success', 'Pesanan dibatalkan');
+        }
+    }
 }

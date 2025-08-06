@@ -31,26 +31,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
-
-<!--
-                                    <div>
-
-                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahproduk">
-                                            Tambah Produk
-                                        </button>
-                                    </div> -->
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+    </div>
+@endif
 								</div>
                                 <!-- wadah table -->
 
                                 <div class="table-responsive">
-
-
-
 								<table class="table table-hover my-0">
 									<thead>
 										<tr>
 
-											<th class="">ID Transaksi</th>
+											<th class="">ID</th>
 											<th class="">Nama Pelanggan</th>
 											<th class="">Usaha</th>
 											<th class="d-none d-xl-table-cell">Tanggal</th>
@@ -71,7 +66,64 @@
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->metode_pembayaran}}</td>
-											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}</td>
+											<td class="d-none d-xl-table-cell text-capitalize">
+                        {{$item->status}}
+                        @if($item->status == 'menunggu konfirmasi')
+                          <button type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#cekBuktiModal{{ $item->transaksi_id }}">
+  Konfirmasi
+</button>
+
+{{-- Update bukti --}}
+  <!-- Modal -->
+<div class="modal fade" id="cekBuktiModal{{ $item->transaksi_id }}" tabindex="-1" aria-labelledby="cekBuktiLabel{{ $item->transaksi_id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ url('/konfirmasipembayaran/' . $item->transaksi_id) }}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cekBuktiLabel{{ $item->transaksi_id }}">Konfirmasi Pembayaran</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+
+          @if($item->bukti_bayar)
+            <div class="mb-3 text-center">
+              <p class="fw-bold">Bukti Bayar Saat Ini:</p>
+             <img src="{{ asset('storage/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
+
+            </div>
+          @else
+            <p class="text-muted text-center">Belum ada bukti bayar diunggah.</p>
+          @endif
+
+         
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-success">Konfirmasi</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{{-- end update bukti --}}
+
+@elseif($item->status == 'antrian')
+<form action="{{ url('/prosespesanan/' . $item->transaksi_id) }}" method="POST" enctype="multipart/form-data">
+@csrf
+<button class="btn btn-outline-primary  btn-sm" type="submit">
+  Proses
+</button>
+</form>
+@elseif($item->status == 'diproses')
+                        <form action="/kirimpesanan/{{$item->transaksi_id}}" method="POST">
+                          @csrf
+                          <button class="btn btn-sm btn-secondary" type="submit">Kirim</button>
+                        </form>
+                        @endif
+                      </td>
 
 										<td class="">
     <!-- Detail Button -->
