@@ -301,7 +301,7 @@
     $('#keteranganDetail').html(item.deskripsi ?? '-');
 
     if (item.gambar) {
-        $('#gambarProdukDetail').attr('src', '/storage/app/public/' + item.gambar).show();
+        $('#gambarProdukDetail').attr('src', '/storage/' + item.gambar).show();
     } else {
         $('#gambarProdukDetail').attr('src', '').hide();
     }
@@ -323,7 +323,7 @@
     $('#editDeskripsi').val(item.deskripsi);
 
     if (item.gambar) {
-        $('#previewGambarEdit').attr('src', '/storage/app/public/' + item.gambar).show();
+        $('#previewGambarEdit').attr('src', '/storage/' + item.gambar).show();
     } else {
         $('#previewGambarEdit').hide();
     }

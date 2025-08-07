@@ -57,7 +57,8 @@
 											<th class="">Usaha</th>
 											<th class="d-none d-xl-table-cell">Tanggal</th>
 											<th class="d-none d-xl-table-cell">Total Harga</th>
-											<th class="d-none d-xl-table-cell">Metode Bayar</th>
+											<th class="d-none d-xl-table-cell">Invoice</th>
+										
 											<th class="d-none d-xl-table-cell">Status</th>
 											<th>Aksi</th>
 										</tr>
@@ -72,7 +73,7 @@
                                          <td class="d-none d-xl-table-cell">
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
-											<td class="d-none d-xl-table-cell text-capitalize">{{$item->metode_pembayaran}}</td>
+                      <td><a target="_blank" href="{{asset('storage/invoices/'.'transaksi_'.$item->transaksi_id.'.pdf')}}" class="btn btn-danger btn-sm">Invoice</a></td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}
                       <br>
                       @if($item->status == 'perlu bayar')
@@ -103,7 +104,7 @@
           @if($item->bukti_bayar)
             <div class="mb-3 text-center">
               <p class="fw-bold">Bukti Bayar Saat Ini:</p>
-             <img src="{{ asset('storage/app/public/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
+             <img src="{{ asset('storage/' . $item->bukti_bayar) }}" class="img-thumbnail img-fluid" style="max-width: 150px;" alt="Bukti Bayar">
 
             </div>
           @else
@@ -145,6 +146,7 @@
     <button class="btn btn-warning btnProduk" data-item="{{$item}}" data-bs-toggle="modal" data-bs-target="#modalProduk">
          <i data-feather="package" class=""></i>
     </button>
+    
     @if($item->status == 'antrian' || $item->status == 'perlu bayar')
     <a class="btn btn-danger" href="{{ url('/batalkanpesanan/' . $item->transaksi_id) }}">
      <i data-feather="x"></i>
@@ -187,6 +189,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
         <div class="modal-body">
+          <div class="mb-3">
+              <h5 class="mb-2">Transfer ke rekening</h5>
+              <h4 class=""><span id="rekening"></span> | <span id="no_rek"></span> </h4>
+          </div>
           <div class="mb-3">
             <label for="bukti_bayar" class="form-label">Upload Bukti Bayar</label>
             <input class="form-control" type="file" id="bukti_bayar" name="bukti_bayar" accept="image/*,application/pdf" required>
@@ -472,6 +478,8 @@
   $(".btnUploadBukti").on('click', function() {
     var item = $(this).data('item') ;
     console.log(item);
+    $("#rekening").html(item.usaha.rekening ?? '-');
+    $("#no_rek").html(item.usaha.no_rek ?? '-');
     $('#formBuktiBayar').attr('action', '/uploadbuktibayar/' + item.transaksi_id);
   }
 )

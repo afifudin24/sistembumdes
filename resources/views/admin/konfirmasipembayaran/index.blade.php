@@ -55,7 +55,7 @@
                                          {{ formatRupiah($item->total_harga)}}
                                         </td>
                     <td class="d-none d-xl-table-cell text-capitalize">
-                        <a target='_blank' class="btn btn-info"  href="{{asset('storage/app/public/'.$item->bukti_bayar)}}">
+                        <a target='_blank' class="btn btn-info"  href="{{asset('storage/'.$item->bukti_bayar)}}">
                         Cek Bukti Bayar
                         </a>
                         </td>

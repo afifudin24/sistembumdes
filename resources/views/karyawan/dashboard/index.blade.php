@@ -177,8 +177,8 @@
 											<td class="d-none d-xl-table-cell">{{formatTanggal($item->tanggal)}}</td>
 											<td class="d-none d-xl-table-cell">{{$item->pelanggan->nama}}</td>
 											<td><span class="badge bg-success">{{formatRupiah($item->total_harga)}}</span></td>
-											<td class="d-none d-md-table-cell">
-                                                <button class="btn btn-success" class="d-flex align-items-center">
+										<td class="d-none d-md-table-cell">
+                                                <button class="btn btn-success btnDetail" data-bs-toggle="modal" data-bs-target="#modalDetail" data-item="{{$item}}" class="d-flex align-items-center">
                                                 <i data-feather="eye"></i>
                                                 <span>
                                                     Detail
@@ -211,6 +211,22 @@
 
 
 @push('scripts')
+
+<script>
+	 $('.btnDetail').on('click', function () {
+    var item = $(this).data('item');
+    console.log(item);
+    $('#namaUsahaDetail').html(item.usaha.nama_usaha ?? '-');
+    $('#pelangganDetail').html(item.pelanggan.nama ?? '-');
+    $('#pelangganAlamatDetail').html(item.pelanggan.alamat ?? '-');
+    $('#totalDetail').html(item.total_harga ?? '-');
+    $('#metodePembayaranDetail').html(item.metode_pembayaran ?? '-');
+    $('#tanggalDetail').html(item.tanggal ?? '-');
+    $('#statusDetail').html(item.status ?? '-');
+    $('#keteranganDetail').html(item.keterangan ?? '-');
+});
+</script>
+
 
 	<script>
 document.addEventListener("DOMContentLoaded", function () {
