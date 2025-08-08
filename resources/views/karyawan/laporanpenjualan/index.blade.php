@@ -63,7 +63,7 @@
 
 
 								<table class="table table-hover my-0">
-									<thead>
+                                <thead>
 										<tr>
 											<th>NO</th>
 											<th class="">Tanggal</th>

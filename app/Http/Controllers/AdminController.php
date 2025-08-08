@@ -14,7 +14,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
     }
       public function getAdmin() {
         // ambil Admin paginate
@@ -81,7 +80,7 @@ class AdminController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
+    */
     public function edit(Admin $admin)
     {
         //

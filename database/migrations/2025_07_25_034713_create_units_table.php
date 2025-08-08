@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 return new class extends Migration
 {
     /**
@@ -21,13 +19,11 @@ return new class extends Migration
             $table->integer('stok')->default(0);
             $table->string('gambar', 255)->nullable(); // nama file gambar
             $table->timestamps();
-
             // Foreign Key Constraints
             $table->foreign('kategori_id')->references('kategori_id')->on('kategori')->onDelete('cascade');
             // $table->foreign('usaha_id')->references('usaha_id')->on('usaha')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */

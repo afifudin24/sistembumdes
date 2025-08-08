@@ -61,17 +61,26 @@
                         </td>
 											<td class="d-none d-xl-table-cell text-capitalize">{{$item->status}}</td>
 
-										<td class="d-flex gap-2">
-                    <a class="btn btn-success" href="/konfirmasipembayaran/{{$item->transaksi_id}}">
-                    Konfirmasi
-                    </a>
+									<td class="d-flex gap-2">
 
-                    <a class="btn btn-danger" href="/tolakpembayaran/{{$item->transaksi_id}}">
-                      Tolak
-                    </a>
+    {{-- Form Konfirmasi --}}
+    <form action="{{ url('/konfirmasipembayaran/' . $item->transaksi_id) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-success">
+            Konfirmasi
+        </button>
+    </form>
 
+    {{-- Form Tolak --}}
+    <form action="{{ url('/tolakpembayaran/' . $item->transaksi_id) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-danger">
+            Tolak
+        </button>
+    </form>
 
 </td>
+
 
 										</tr>
                                         @endforeach
