@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\LandingPageController;
@@ -40,11 +40,11 @@ Route::middleware([CekLogin::class])->group(function () {
 // Super Admin
 Route::middleware([CekLogin::class . ':superadmin'])->group(function () {
     // Kelola Data Super Admin
-    Route::get('/datasuperadmin', [SuperAdminController::class, 'getSuperAdmin'])->name('datasuperadmin');
-    Route::get('/aktifkansuperadmin/{id}' , [SuperAdminController::class, 'aktifkanSuperAdmin'])->name('aktifkansuperadmin');
-    Route::post('/tambahsuperadmin' , [SuperAdminController::class, 'store'])->name('tambahsuperadmin');
-    Route::put('/updatesuperadmin/{id}' , [SuperAdminController::class, 'update'])->name('updatesuperadmin');
-    Route::delete('/hapussuperadmin/{id}' , [SuperAdminController::class, 'destroy'])->name('hapussuperadmin');
+    Route::get('/datasuperadmin', [SuperadminController::class, 'getSuperAdmin'])->name('datasuperadmin');
+    Route::get('/aktifkansuperadmin/{id}' , [SuperadminController::class, 'aktifkanSuperAdmin'])->name('aktifkansuperadmin');
+    Route::post('/tambahsuperadmin' , [SuperadminController::class, 'store'])->name('tambahsuperadmin');
+    Route::put('/updatesuperadmin/{id}' , [SuperadminController::class, 'update'])->name('updatesuperadmin');
+    Route::delete('/hapussuperadmin/{id}' , [SuperadminController::class, 'destroy'])->name('hapussuperadmin');
     // Kelola Data Admin
     Route::get('/dataadmin', [AdminController::class, 'getAdmin'])->name('dataadmin');
     Route::get('/aktifkanadmin/{id}' , [AdminController::class, 'aktifkanAdmin'])->name('aktifkanadmin');
